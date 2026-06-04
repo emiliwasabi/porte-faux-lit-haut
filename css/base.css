@@ -33,6 +33,7 @@ body {
   --index-size: clamp(0.76rem, 0.92vw, 0.88rem);
   --index-flow-size: clamp(1rem, 2.05vw, 1.55rem);
   --index-legend-size: clamp(0.58rem, 0.72vw, 0.68rem);
+  --about-colophon-size: clamp(0.62rem, 0.78vw, 0.74rem);
   --page-pad: clamp(20px, 3.8vw, 42px);
   --line-height: 0.4;
   --spine-clearance: clamp(1.5rem, 4.5vw, 3.25rem);

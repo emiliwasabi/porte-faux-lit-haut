@@ -20,6 +20,8 @@ const hosts = {
 };
 
 let page = 1;
+let bookOpened = false;
+const coverBranch = document.querySelector(".nav-cover-branch");
 
 function mount(el, host) {
   if (!el || !host) return;
@@ -43,13 +45,20 @@ function layout() {
   }
 }
 
+function goHome() {
+  document.dispatchEvent(new CustomEvent("indexreset"));
+  setPage(1);
+}
+
 function setPage(n) {
+  if (n > 1) bookOpened = true;
   page = n;
   document.body.dataset.page = String(page);
   if (pageNum) pageNum.textContent = String(page);
   if (cover) cover.hidden = page !== 1;
   if (spread) spread.hidden = page === 1;
   layout();
+  coverBranch?.toggleAttribute("hidden", page === 1 || !bookOpened);
   document.dispatchEvent(new CustomEvent("pagechange", { detail: { page } }));
 }
 
@@ -57,7 +66,10 @@ document.addEventListener("click", (e) => {
   const t = e.target;
   if (!(t instanceof Element)) return;
   if (t.closest(".jaquette")) {
-    if (t.closest(".nav-index")) {
+    if (t.closest(".nav-cover")) {
+      e.preventDefault();
+      goHome();
+    } else if (t.closest(".nav-index")) {
       e.preventDefault();
       document.dispatchEvent(new CustomEvent("indexreset"));
       setPage(2);

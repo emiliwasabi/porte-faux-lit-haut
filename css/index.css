@@ -83,3 +83,44 @@ a.index-entry:hover {
 .index-tag--outline {
   opacity: 0.72;
 }
+
+.index-legend-host {
+  position: fixed;
+  left: calc(50vw + var(--gutter-width) / 2);
+  right: var(--jaquette-peek);
+  bottom: clamp(1rem, 2.5vh, 1.75rem);
+  z-index: 4;
+  text-align: center;
+  pointer-events: none;
+}
+
+body[data-page="1"] .index-legend-host,
+body[data-page="3"] .index-legend-host {
+  visibility: hidden;
+}
+
+.index-legend {
+  display: inline-block;
+  margin: 0;
+  padding: 0 clamp(0.5rem, 2vw, 1rem);
+  font-size: var(--index-legend-size);
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  opacity: 0.5;
+}
+
+.index-legend__item {
+  display: inline;
+}
+
+.index-legend__item:not(:last-child)::after {
+  content: "\00a0/\00a0";
+  opacity: 0.45;
+}
+
+.index-legend .index-tag {
+  font-size: 1em;
+  vertical-align: baseline;
+  letter-spacing: 0.06em;
+}

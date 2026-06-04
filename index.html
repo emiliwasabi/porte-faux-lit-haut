@@ -37,7 +37,6 @@
           </div>
           <div class="book-column book-column--gutter">
             <div class="layer-scroll layer-scroll--gutter">
-              <div class="gutter-legend-host"></div>
               <div class="gutter-host gutter-host--above"></div>
             </div>
           </div>
@@ -45,6 +44,7 @@
             <div class="layer-scroll layer-scroll--index">
               <div class="index-host index-host--above"></div>
             </div>
+            <div class="index-legend-host" aria-label="Practice legend"></div>
             <div class="layer-scroll layer-scroll--about">
               <div class="about-host about-host--above"></div>
             </div>
@@ -96,25 +96,52 @@
 
     <section class="about-sheet" id="about" aria-label="About" hidden>
       <div class="about-layout">
-        <ul class="about-list">
-          The bookcase was already in my bedroom in my flat in Bern. And it was
-          pushed right up against the wall; I had no choice, but that suited me
-          fine. It was the only place for it because my flat in Bern wasn’t very
-          big.
-        </ul>
         <div class="about-main">
           <p class="about-lead">
             <strong>Graphic designer &amp; developer</strong> based in Lausanne.
+            <br />
             Creating visual systems through graphic identities, with a special
-            interest in books, archives and indexes.
+            interest in <span class="about-dash">books</span>,
+            <span class="about-dash">archives</span> and the
+            <span class="about-dash">web</span>.
           </p>
         </div>
+        <aside class="about-colophon" aria-label="Colophon">
+          <h2 class="about-colophon__title"></h2>
+          <ul class="about-education">
+            <li class="about-education__entry">
+              <span class="about-education__label">2026</span>
+              <span class="about-education__body">
+                ECAL, Master degree in Digital Experience Design
+              </span>
+              <span class="about-education__meta">Suisse</span>
+            </li>
+            <li class="about-education__entry">
+              <span class="about-education__label">2024</span>
+              <span class="about-education__body">
+                ECAL, Bachelor degree in Graphic Design
+              </span>
+              <span class="about-education__meta">Suisse</span>
+            </li>
+            <li class="about-education__entry">
+              <span class="about-education__label">2020</span>
+              <span class="about-education__body">
+                Gymnase du Bugnon, Maturité Fédérale Biochemistry
+              </span>
+              <span class="about-education__meta">Suisse</span>
+            </li>
+          </ul>
+        </aside>
       </div>
     </section>
 
     <aside class="jaquette" aria-label="Navigation">
       <div class="jaquette-inner">
         <nav class="nav-links">
+          <div class="nav-cover-branch" hidden>
+            <a href="#top" class="nav-cover">cover</a>
+            <span class="separator"></span>
+          </div>
           <div class="nav-index-branch">
             <a href="#top" class="nav-index">index</a>
             <ul
@@ -126,7 +153,6 @@
           </div>
           <a href="#about" class="nav-about">about</a>
           <span class="separator"></span>
-          <a href="#colophon">colophon</a>
         </nav>
       </div>
     </aside>

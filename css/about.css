@@ -6,28 +6,30 @@
 
 body[data-page="3"] .about-host--above {
   pointer-events: auto;
+  --index-pad-right-active: calc(var(--jaquette-peek) + clamp(0.75rem, 1.5vw, 1.25rem));
+  padding: var(--index-pad-top) max(var(--index-pad-right), var(--index-pad-right-active))
+    var(--index-pad-bottom) var(--index-pad-left);
 }
 
 .about-sheet {
   position: relative;
   width: 100%;
   min-height: 100%;
-  padding: var(--index-pad-top) var(--index-pad-right) var(--index-pad-bottom)
-    var(--index-pad-left);
-  font-family: "ABC Diatype", "Helvetica Neue", Arial, sans-serif;
-  font-size: var(--index-size);
-  line-height: 1.55;
   color: var(--ink);
 }
 
 .about-layout {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(1.4rem, 3vh, 2.2rem);
-  max-width: min(
-    42ch,
-    calc(100% - var(--spine-clearance) - var(--index-pad-right))
-  );
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 0 clamp(3rem, 8vh, 6rem);
+  text-align: center;
+  font-family: "ABC Diatype", "Helvetica Neue", Arial, sans-serif;
+  font-size: var(--index-flow-size);
+  font-weight: 500;
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
 }
 
 .about-list {
@@ -37,26 +39,92 @@ body[data-page="3"] .about-host--above {
 }
 
 .about-list li {
-  margin: 0 0 0.35rem;
-  line-height: 1.35;
+  margin: 0;
+  font: inherit;
+  line-height: inherit;
 }
 
 .about-lead {
   margin: 0;
-  line-height: 1.5;
+  font: inherit;
+  line-height: inherit;
 }
 
 .about-lead strong {
   font-weight: 500;
 }
 
+.about-dash {
+  display: inline-block;
+  cursor: default;
+  text-decoration: underline dashed;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.12em;
+}
+
+.about-dash .cover-letter {
+  display: inline-block;
+  transform-origin: center center;
+  vertical-align: baseline;
+  transition: transform var(--motion-soft);
+}
+
+.about-colophon {
+  margin-top: clamp(2rem, 5vh, 3.25rem);
+  text-align: left;
+  text-wrap: wrap;
+  font-size: var(--about-colophon-size);
+  line-height: 1.35;
+  letter-spacing: 0;
+  opacity: 0.88;
+}
+
+.about-colophon__title {
+  margin: 0 0 clamp(0.75rem, 1.8vh, 1rem);
+  font: inherit;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.about-education {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.55rem, 1.2vh, 0.75rem);
+}
+
+.about-education__entry {
+  display: grid;
+  grid-template-columns: minmax(2.8rem, 12%) minmax(0, 1fr) minmax(3rem, auto);
+  gap: clamp(0.65rem, 1.6vw, 1.25rem);
+  align-items: baseline;
+}
+
+.about-education__label {
+  font-weight: 500;
+}
+
+.about-education__body {
+  min-width: 0;
+  font-weight: 400;
+}
+
+.about-education__meta {
+  text-align: right;
+  white-space: nowrap;
+  font-weight: 400;
+}
+
 .about-prose {
   margin: 0;
-  line-height: 1.55;
+  font: inherit;
+  line-height: inherit;
 }
 
 .about-prose p {
-  margin: 0 0 1.1rem;
+  margin: 0 0 0.65em;
 }
 
 .about-prose p:last-child {
@@ -64,10 +132,10 @@ body[data-page="3"] .about-host--above {
 }
 
 .about-side h2 {
-  margin: 0 0 0.65rem;
-  font-size: inherit;
+  margin: 0 0 0.65em;
+  font: inherit;
   font-weight: 500;
-  line-height: 1.35;
+  line-height: inherit;
 }
 
 .about-credits {
@@ -77,10 +145,11 @@ body[data-page="3"] .about-host--above {
 }
 
 .about-credits li {
-  margin: 0 0 0.55rem;
+  margin: 0 0 0.35em;
   padding-left: 0.9rem;
   text-indent: -0.9rem;
-  line-height: 1.45;
+  font: inherit;
+  line-height: inherit;
 }
 
 .about-credits li::before {

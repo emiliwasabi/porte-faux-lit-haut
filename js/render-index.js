@@ -1,6 +1,6 @@
 (() => {
   const body = document.querySelector(".index-body");
-  const legendHost = document.querySelector(".gutter-legend-host");
+  const legendHost = document.querySelector(".index-legend-host");
   if (!body || !legendHost) return;
 
   function practiceTag(practice, { inLegend = false } = {}) {

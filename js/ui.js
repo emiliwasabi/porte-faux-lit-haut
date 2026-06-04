@@ -23,16 +23,16 @@
     });
   }
 
-  function letterizeCover(line) {
-    const text = line.textContent.trim();
+  function letterizeScatter(el, { lineClass, letterClass } = {}) {
+    const text = el.textContent.trim();
     const letters = [...text];
-    line.textContent = "";
-    line.classList.add("cover-tagline");
+    el.textContent = "";
+    if (lineClass) el.classList.add(lineClass);
     const spans = letters.map((char) => {
       const span = document.createElement("span");
-      span.className = "cover-letter";
+      span.className = letterClass;
       span.textContent = char === " " ? "\u00A0" : char;
-      line.append(span);
+      el.append(span);
       return span;
     });
 
@@ -40,7 +40,7 @@
 
     let scattered = false;
 
-    line.addEventListener("pointerenter", () => {
+    el.addEventListener("pointerenter", () => {
       if (scattered) {
         spans.forEach((span) => {
           span.style.transform = "";
@@ -55,8 +55,18 @@
     });
   }
 
+  function letterizeCover(line) {
+    letterizeScatter(line, {
+      lineClass: "cover-tagline",
+      letterClass: "cover-letter",
+    });
+  }
+
   document.querySelectorAll(".gutter-contacts p").forEach(letterizeGutter);
   document.querySelectorAll(".contacts p").forEach(letterizeCover);
+  document.querySelectorAll(".about-dash").forEach((el) => {
+    letterizeScatter(el, { letterClass: "cover-letter" });
+  });
 
   const jaquette = document.querySelector(".jaquette");
   const bookOpen = () => {

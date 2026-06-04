@@ -89,6 +89,7 @@
     const fig = document.createElement("figure");
     fig.className = "gutter-item";
     fig.dataset.imageIndex = String(item.imageIndex);
+    fig.dataset.slug = item.project.slug;
     appendMedia(fig, item.project, item.filename, "gutter-img", {
       eager,
       sizes: "var(--gutter-width)",
@@ -108,6 +109,16 @@
         index >= 0 && Number(el.dataset.imageIndex) === index,
       );
     });
+  }
+
+  function scrollToGalleryImage(index) {
+    if (!galleryHost || !activeSlug || !Number.isFinite(index)) return;
+    const target = galleryHost.querySelector(
+      `.project-gallery__item[data-image-index="${index}"]`,
+    );
+    if (!target) return;
+    target.scrollIntoView({ behavior: "smooth", block: "center" });
+    setGutterHighlight(index);
   }
 
   function renderGutter(slug = activeSlug) {
@@ -226,6 +237,24 @@
       setGutterHighlight(e.detail.index);
   });
   document.addEventListener("indexreset", resetIndex);
+  bookGutter?.addEventListener("click", (e) => {
+    if (document.body.dataset.page !== "2") return;
+    const item = e.target.closest(".gutter-item");
+    if (!item?.dataset.slug) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (activeSlug) {
+      scrollToGalleryImage(Number(item.dataset.imageIndex));
+      return;
+    }
+
+    const project = bySlug(item.dataset.slug);
+    if (!project) return;
+    history.pushState(null, "", `#${project.slug}`);
+    window.recordProjectVisit?.(project);
+  });
   document.addEventListener("pagechange", (e) => {
     const p = e.detail?.page;
     if (p !== 2) renderGallery(null);
