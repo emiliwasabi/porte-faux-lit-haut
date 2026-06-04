@@ -1,10 +1,10 @@
+/* tokens → layout → content → chrome */
 @import "./base.css";
 @import "./book.css";
+@import "./cover.css";
+@import "./index.css";
 @import "./gutter.css";
 @import "./project-gallery.css";
-@import "./index.css";
-@import "./cover.css";
-@import "./ascii-chair.css";
-@import "./jaquette.css";
 @import "./about.css";
+@import "./jaquette.css";
 @import "./responsive.css";

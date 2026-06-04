@@ -3,14 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Emilie Muller — Portfolio</title>
+    <title>Emilie Müller</title>
     <link rel="stylesheet" href="./css/main.css" />
   </head>
   <body>
     <main class="book-page" id="top">
       <div class="book-layer book-layer--cover">
         <div class="cover-under" aria-hidden="true">
-          <div class="symbol-host symbol-host--cover"></div>
           <div class="index-host index-host--cover"></div>
           <div class="gutter-host gutter-host--cover"></div>
         </div>
@@ -19,13 +18,6 @@
           <div class="page-content">
             <p class="page-number">1</p>
             <div class="cover-text-host cover-text-host--above"></div>
-            <div class="ascii-chair-host" aria-hidden="true">
-              <pre
-                class="ascii-chair"
-                role="img"
-                aria-label="Chaise ASCII"
-              ></pre>
-            </div>
           </div>
         </div>
       </div>
@@ -33,7 +25,6 @@
       <div class="book-layer book-layer--spread" hidden>
         <div class="spread-under" aria-hidden="true">
           <div class="cover-text-host cover-text-host--under"></div>
-          <div class="symbol-host symbol-host--under"></div>
           <div class="index-host index-host--under"></div>
           <div class="about-host about-host--under"></div>
         </div>
@@ -41,20 +32,14 @@
         <div class="book-columns">
           <div class="book-column book-column--left">
             <div class="layer-scroll layer-scroll--left">
-              <div
-                class="project-gallery-host"
-                aria-label="Images du projet"
-                hidden
-              ></div>
+              <div class="project-gallery-host" hidden></div>
             </div>
           </div>
-
           <div class="book-column book-column--gutter">
             <div class="layer-scroll layer-scroll--gutter">
               <div class="gutter-host gutter-host--above"></div>
             </div>
           </div>
-
           <div class="book-column book-column--right">
             <div class="layer-scroll layer-scroll--index">
               <div class="index-host index-host--above"></div>
@@ -85,15 +70,10 @@
       <div class="gutter-media gutter-media--top"></div>
       <div class="gutter-contacts" aria-label="Contact">
         <p>write</p>
-        <p>
-          <a href="mailto:mulleremilie8@gmail.com">an e-mail</a>
-        </p>
+        <p><a href="mailto:mulleremilie8@gmail.com">an e-mail</a></p>
         <p>see me</p>
         <p>
-          <a
-            href="https://instagram.com/emiliwasabi"
-            target="_blank"
-            rel="noopener"
+          <a href="https://instagram.com/emiliwasabi" target="_blank" rel="noopener"
             >around here</a
           >
         </p>
@@ -118,7 +98,6 @@
           fine. It was the only place for it because my flat in Bern wasn’t very
           big.
         </ul>
-
         <div class="about-main">
           <p class="about-lead">
             <strong>Graphic designer &amp; developer</strong> based in Lausanne.
@@ -134,12 +113,7 @@
         <nav class="nav-links">
           <div class="nav-index-branch">
             <a href="#top" class="nav-index">index</a>
-            <ul
-              class="history-tree"
-              id="history-tree"
-              aria-label="Projets visités"
-              hidden
-            ></ul>
+            <ul class="history-tree" id="history-tree" aria-label="Projets visités" hidden></ul>
           </div>
           <a href="#about" class="nav-about">about</a>
           <span class="separator"></span>
@@ -148,16 +122,12 @@
       </div>
     </aside>
 
-    <script src="./js/projects-data.js" defer></script>
-    <script src="./js/image-loader.js" defer></script>
+    <script src="./js/shared.js" defer></script>
     <script src="./js/render-index.js" defer></script>
-    <script src="./js/render-gutter.js" defer></script>
-    <script src="./js/render-project-gallery.js" defer></script>
-    <script src="./js/gutter-playful.js" defer></script>
-    <script src="./js/info-hover.js" defer></script>
-    <script src="./js/ascii-chair.js" defer></script>
-    <script src="./js/page-turn.js" defer></script>
-    <script src="./js/jaquette-reveal.js" defer></script>
+    <script src="./js/project-media.js" defer></script>
     <script src="./js/history.js" defer></script>
+    <script src="./js/page-turn.js" defer></script>
+    <script src="./js/ui.js" defer></script>
+    <script src="./js/pen-trail.js" defer></script>
   </body>
 </html>

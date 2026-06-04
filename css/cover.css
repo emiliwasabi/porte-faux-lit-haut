@@ -50,8 +50,21 @@ h1 {
 
 .contacts p {
   display: block;
+  margin: 0;
   line-height: var(--line-height);
   white-space: nowrap;
-  color: inherit;
+  color: var(--ink);
   font-size: var(--text-size);
+  cursor: default;
+}
+
+.contacts .cover-tagline {
+  letter-spacing: normal;
+}
+
+.contacts .cover-letter {
+  display: inline-block;
+  transform-origin: center center;
+  vertical-align: baseline;
+  transition: transform var(--motion-soft);
 }

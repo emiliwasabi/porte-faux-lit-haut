@@ -68,16 +68,6 @@ body[data-page="3"] .book-layer--spread {
   min-height: 100vh;
 }
 
-.symbol-host {
-  display: none;
-}
-
-.symbol-host--cover .symbol-layer {
-  position: relative;
-  width: calc(50vw - var(--gutter-width) / 2);
-  min-height: 100vh;
-}
-
 .book-surface--cover {
   background: var(--paper);
 }
@@ -98,14 +88,6 @@ body[data-page="3"] .book-layer--spread {
 .spread-under .cover-text-host--under {
   position: absolute;
   inset: 0;
-}
-
-.spread-under .symbol-host--under {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: calc(50vw - var(--gutter-width) / 2);
-  min-height: 100vh;
 }
 
 .spread-under .index-host--under,
@@ -190,20 +172,6 @@ body[data-page="2"] .layer-scroll--about {
 body[data-page="3"] .layer-scroll--index {
   visibility: hidden;
   pointer-events: none;
-}
-
-.symbol-host--above .symbol-layer {
-  position: relative;
-  width: 100%;
-  min-height: 140vh;
-}
-
-.symbol {
-  position: absolute;
-  width: clamp(135px, 15.5vw, 190px);
-  height: clamp(135px, 15.5vw, 190px);
-  object-fit: contain;
-  opacity: 1;
 }
 
 .page-content {

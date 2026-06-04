@@ -1,57 +1,44 @@
-function createPracticeMarker(practice) {
-  const span = document.createElement("span");
-  span.className =
-    practice.style === "outline"
-      ? "index-marker index-marker--outline"
-      : "index-marker";
-  span.setAttribute("aria-hidden", "true");
-  span.title = practice.label;
-  span.textContent = practice.letter;
-  return span;
-}
+(() => {
+  const body = document.querySelector(".index-body");
+  if (!body) return;
 
-function createProjectEntry(project, practice, showMarker) {
-  const link = document.createElement("a");
-  link.href = `#${project.slug}`;
-  link.id = project.slug;
-  link.className = `index-entry indent-${project.indent}`;
-  link.dataset.practice = project.practice;
-
-  if (showMarker && practice) {
-    link.appendChild(createPracticeMarker(practice));
+  function marker(practice) {
+    const s = document.createElement("span");
+    s.className =
+      practice.style === "outline"
+        ? "index-marker index-marker--outline"
+        : "index-marker";
+    s.setAttribute("aria-hidden", "true");
+    s.title = practice.label;
+    s.textContent = practice.letter;
+    return s;
   }
 
-  const desc = document.createElement("p");
-  desc.className = "index-desc";
-  desc.innerHTML = `<span class="index-title">${project.title}</span> — ${project.description}`;
-
-  link.append(desc);
-  return link;
-}
-
-async function renderProjectIndex() {
-  const indexBody = document.querySelector(".index-body");
-  if (!indexBody) return;
-
-  try {
-    const data = await getProjectsData();
-    const practiceById = Object.fromEntries(
-      (data.practices || []).map((item) => [item.id, item])
-    );
-
-    indexBody.replaceChildren();
-
-    let previousPracticeId = null;
-
-    for (const project of data.projects) {
-      const practice = practiceById[project.practice];
-      const showMarker = project.practice !== previousPracticeId;
-      indexBody.appendChild(createProjectEntry(project, practice, showMarker));
-      previousPracticeId = project.practice;
-    }
-  } catch (error) {
-    console.error("Could not load projects.json", error);
+  function entry(project, practice, showMarker) {
+    const a = document.createElement("a");
+    a.href = `#${project.slug}`;
+    a.id = project.slug;
+    a.className = `index-entry indent-${project.indent}`;
+    a.dataset.practice = project.practice;
+    if (showMarker && practice) a.append(marker(practice));
+    const p = document.createElement("p");
+    p.className = "index-desc";
+    p.innerHTML = `<span class="index-title">${project.title}</span> — ${project.description}`;
+    a.append(p);
+    return a;
   }
-}
 
-renderProjectIndex();
+  getProjectsData()
+    .then((data) => {
+      const practices = Object.fromEntries((data.practices || []).map((x) => [x.id, x]));
+      let prev = null;
+      body.replaceChildren(
+        ...data.projects.map((project) => {
+          const show = project.practice !== prev;
+          prev = project.practice;
+          return entry(project, practices[project.practice], show);
+        }),
+      );
+    })
+    .catch((err) => console.error("render-index", err));
+})();
