@@ -7,19 +7,29 @@
       "style": "filled"
     },
     {
-      "id": "identity",
+      "id": "print",
       "letter": "B",
-      "label": "visual identities",
+      "label": "print",
       "style": "filled"
     },
     {
-      "id": "editorial",
+      "id": "type",
       "letter": "C",
-      "label": "editorial design",
-      "style": "outline"
+      "label": "type",
+      "style": "filled"
+    },
+    {
+      "id": "motion",
+      "letter": "D",
+      "label": "motion",
+      "style": "filled"
     }
-
-    
+  ],
+  "indexLegend": [
+    { "letter": "A", "text": "web" },
+    { "letter": "B", "text": "print" },
+    { "letter": "C", "text": "type" },
+    { "letter": "D", "text": "motion" }
   ],
   "projects": [
     {
@@ -27,7 +37,7 @@
       "slug": "awiar",
       "title": "A website is a room",
       "description": "print, 3D, poster design.",
-      "practice": "web",
+      "practice": "print",
       "indent": 0,
       "folder": "assets/projects/awiar",
       "images": [
@@ -43,7 +53,7 @@
       "slug": "kunstmuseum",
       "title": "Bündner Kunst Museum",
       "description": "website, visual identity.",
-      "practice": "identity",
+      "practice": "web",
       "indent": 1,
       "folder": "assets/projects/kunstmuseum",
       "images": ["km1.jpg", "km2.jpg", "km3.jpg", "km4.jpg", "km5.jpg"]
@@ -53,7 +63,7 @@
       "slug": "prettylucky",
       "title": "Pretty Lucky",
       "description": "poster design.",
-      "practice": "identity",
+      "practice": "print",
       "indent": 2,
       "folder": "assets/projects/prettylucky",
       "images": [
@@ -68,7 +78,7 @@
       "slug": "librarynth",
       "title": "Librarynth",
       "description": "website, archive, visual identity.",
-      "practice": "editorial",
+      "practice": "web",
       "indent": 0,
       "folder": "assets/projects/librarynth",
       "images": [
@@ -84,7 +94,7 @@
       "slug": "lottof",
       "title": "Lottofprints",
       "description": "print, poster, event.",
-      "practice": "editorial",
+      "practice": "print",
       "indent": 1,
       "folder": "assets/projects/lottof",
       "images": [
@@ -100,7 +110,7 @@
       "slug": "athlete-a",
       "title": "Athlete A",
       "description": "print.",
-      "practice": "identity",
+      "practice": "print",
       "indent": 0,
       "folder": "assets/projects/athleteA",
       "images": [
@@ -116,7 +126,7 @@
       "slug": "fall-workshop",
       "title": "Fall Workshop",
       "description": "workshop, print, video.",
-      "practice": "editorial",
+      "practice": "motion",
       "indent": 2,
       "folder": "assets/projects/fallworkshop",
       "images": [
@@ -147,7 +157,7 @@
       "slug": "modular",
       "title": "Modular",
       "description": "motion, identity.",
-      "practice": "identity",
+      "practice": "motion",
       "indent": 1,
       "folder": "assets/projects/modular",
       "images": [
@@ -163,7 +173,7 @@
       "slug": "pepite",
       "title": "Pépite",
       "description": "identity, print, website.",
-      "practice": "editorial",
+      "practice": "web",
       "indent": 2,
       "folder": "assets/projects/pepite",
       "images": [
@@ -179,7 +189,7 @@
       "slug": "pink-panther",
       "title": "Pink Panther",
       "description": "type design.",
-      "practice": "identity",
+      "practice": "type",
       "indent": 2,
       "folder": "assets/projects/pinkpanther",
       "images": [
@@ -195,7 +205,7 @@
       "slug": "seaside",
       "title": "Seaside",
       "description": "motion, 3D.",
-      "practice": "web",
+      "practice": "motion",
       "indent": 2,
       "folder": "assets/projects/seaside",
       "images": [
@@ -210,7 +220,7 @@
       "slug": "silver-steel",
       "title": "Silver Steel",
       "description": "type design.",
-      "practice": "editorial",
+      "practice": "type",
       "indent": 2,
       "folder": "assets/projects/silversteel",
       "images": [

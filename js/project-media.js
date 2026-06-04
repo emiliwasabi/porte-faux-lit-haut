@@ -50,8 +50,10 @@
 
     const flat = [...partition.top, ...partition.bottom];
     const min = Math.ceil(
-      Math.max(window.innerHeight - GUTTER_CONTACTS_H, GUTTER_STEP * GUTTER_TOP) /
-        GUTTER_STEP,
+      Math.max(
+        window.innerHeight - GUTTER_CONTACTS_H,
+        GUTTER_STEP * GUTTER_TOP,
+      ) / GUTTER_STEP,
     );
     const filled = repeatToFill(flat, min);
     return {
@@ -60,7 +62,13 @@
     };
   }
 
-  function appendMedia(fig, project, filename, className, { eager, high, sizes }) {
+  function appendMedia(
+    fig,
+    project,
+    filename,
+    className,
+    { eager, high, sizes },
+  ) {
     const url = projectImageSrc(project, filename);
     if (isVideoMedia(filename)) {
       const video = document.createElement("video");
@@ -114,7 +122,11 @@
     const part = fillGutter(partition, Boolean(slug));
     const eager = slug ? 2 : 1;
     renderGutterGroup(top, part.top, eager);
-    renderGutterGroup(bottom, part.bottom, Math.max(0, eager - part.top.length));
+    renderGutterGroup(
+      bottom,
+      part.bottom,
+      Math.max(0, eager - part.top.length),
+    );
     bookGutter?.classList.toggle("is-project-sync", Boolean(slug));
     bookGutter?.classList.toggle("is-index-mix", !slug);
     setGutterHighlight(slug ? 0 : -1);
@@ -176,7 +188,11 @@
           );
         }
       },
-      { root: leftScroll, threshold: [0, 0.35, 0.5, 0.65, 0.8, 1], rootMargin: "-8% 0px -8% 0px" },
+      {
+        root: leftScroll,
+        threshold: [0, 0.35, 0.5, 0.65, 0.8, 1],
+        rootMargin: "-8% 0px -8% 0px",
+      },
     );
     galleryHost.querySelectorAll(".project-gallery__item").forEach((el) => {
       galleryObserver.observe(el);
@@ -206,12 +222,17 @@
     if (e.detail?.project?.slug) onProjectVisit(e.detail.project.slug);
   });
   document.addEventListener("galleryimageactive", (e) => {
-    if (activeSlug && Number.isFinite(e.detail?.index)) setGutterHighlight(e.detail.index);
+    if (activeSlug && Number.isFinite(e.detail?.index))
+      setGutterHighlight(e.detail.index);
   });
   document.addEventListener("indexreset", resetIndex);
   document.addEventListener("pagechange", (e) => {
-    if (e.detail?.page !== 2) renderGallery(null);
-    if (e.detail?.page === 2 && !activeSlug) renderGutter(null);
+    const p = e.detail?.page;
+    if (p !== 2) renderGallery(null);
+    if (p === 3) {
+      activeSlug = null;
+      renderGutter(null);
+    } else if (p === 2 && !activeSlug) renderGutter(null);
   });
 
   let resizeTimer;

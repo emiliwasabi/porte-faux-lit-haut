@@ -63,6 +63,7 @@ document.addEventListener("click", (e) => {
       setPage(2);
     } else if (t.closest(".nav-about")) {
       e.preventDefault();
+      document.dispatchEvent(new CustomEvent("indexreset"));
       setPage(3);
     }
     return;

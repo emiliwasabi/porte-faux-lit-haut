@@ -105,6 +105,15 @@ body[data-page="3"] .book-layer--spread {
   pointer-events: none;
 }
 
+body[data-page="3"] .spread-under .index-host--under {
+  right: auto;
+  left: 0;
+  padding: var(--index-pad-top) var(--index-pad-left) var(--index-pad-bottom)
+    var(--index-pad-right);
+  transform: scaleX(-1);
+  transform-origin: center center;
+}
+
 .book-surface::before,
 .book-surface::after {
   content: "";

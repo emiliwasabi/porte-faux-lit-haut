@@ -9,7 +9,11 @@
   .index-host--cover .index-sheet,
   .index-host--above .index-sheet,
   .index-host--under .index-sheet {
-    --index-sheet-max: min(46ch, calc(100% - var(--spine-clearance) - 12px));
+    --index-sheet-max: 100%;
+  }
+
+  body {
+    --index-flow-size: clamp(0.92rem, 4.2vw, 1.2rem);
   }
 
   .top-content {
@@ -44,14 +48,4 @@
     height: clamp(120px, 30vw, 165px);
   }
 
-  .index-host--cover .index-sheet,
-  .index-host--above .index-sheet,
-  .index-host--under .index-sheet {
-    --index-indent-1: 1.2rem;
-    --index-indent-2: 2.4rem;
-  }
-
-  .index-marker {
-    left: -1.25rem;
-  }
 }
