@@ -1,0 +1,94 @@
+.about-host--above {
+  width: 100%;
+  min-height: 100%;
+  pointer-events: none;
+}
+
+body[data-page="3"] .about-host--above {
+  pointer-events: auto;
+}
+
+.about-sheet {
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+  padding: var(--index-pad-top) var(--index-pad-right) var(--index-pad-bottom)
+    var(--index-pad-left);
+  font-family: "ABC Diatype", "Helvetica Neue", Arial, sans-serif;
+  font-size: var(--index-size);
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+.about-layout {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.4rem, 3vh, 2.2rem);
+  max-width: min(
+    42ch,
+    calc(100% - var(--spine-clearance) - var(--index-pad-right))
+  );
+}
+
+.about-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.about-list li {
+  margin: 0 0 0.35rem;
+  line-height: 1.35;
+}
+
+.about-lead {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.about-lead strong {
+  font-weight: 500;
+}
+
+.about-prose {
+  margin: 0;
+  line-height: 1.55;
+}
+
+.about-prose p {
+  margin: 0 0 1.1rem;
+}
+
+.about-prose p:last-child {
+  margin-bottom: 0;
+}
+
+.about-side h2 {
+  margin: 0 0 0.65rem;
+  font-size: inherit;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.about-credits {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.about-credits li {
+  margin: 0 0 0.55rem;
+  padding-left: 0.9rem;
+  text-indent: -0.9rem;
+  line-height: 1.45;
+}
+
+.about-credits li::before {
+  content: "⸺ ";
+}
+
+.about-credits em {
+  font-style: normal;
+  font-weight: 500;
+}
+

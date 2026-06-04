@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Emilie Muller — Portfolio</title>
+    <link rel="stylesheet" href="./css/main.css" />
+  </head>
+  <body>
+    <main class="book-page" id="top">
+      <div class="book-layer book-layer--cover">
+        <div class="cover-under" aria-hidden="true">
+          <div class="symbol-host symbol-host--cover"></div>
+          <div class="index-host index-host--cover"></div>
+          <div class="gutter-host gutter-host--cover"></div>
+        </div>
+        <div class="book-surface book-surface--cover" aria-hidden="true"></div>
+        <div class="layer-scroll layer-scroll--cover">
+          <div class="page-content">
+            <p class="page-number">1</p>
+            <div class="cover-text-host cover-text-host--above"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="book-layer book-layer--spread" hidden>
+        <div class="spread-under" aria-hidden="true">
+          <div class="cover-text-host cover-text-host--under"></div>
+          <div class="symbol-host symbol-host--under"></div>
+          <div class="index-host index-host--under"></div>
+          <div class="about-host about-host--under"></div>
+        </div>
+        <div class="book-surface book-surface--spread" aria-hidden="true"></div>
+        <div class="book-columns">
+          <div class="book-column book-column--left">
+            <div class="layer-scroll layer-scroll--left">
+              <div class="symbol-host symbol-host--above"></div>
+            </div>
+          </div>
+
+          <div class="book-column book-column--gutter">
+            <div class="layer-scroll layer-scroll--gutter">
+              <div class="gutter-host gutter-host--above"></div>
+            </div>
+          </div>
+
+          <div class="book-column book-column--right">
+            <div class="layer-scroll layer-scroll--index">
+              <div class="index-host index-host--above"></div>
+            </div>
+            <div class="layer-scroll layer-scroll--about">
+              <div class="about-host about-host--above"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <section class="top-content" hidden>
+      <div class="left-column">
+        <h1>émilie müller</h1>
+      </div>
+      <div class="right-column contacts">
+        <p>graphic design</p>
+        <p>& development</p>
+      </div>
+    </section>
+
+    <nav class="index-sheet" aria-label="Projects" hidden>
+      <section class="index-body"></section>
+    </nav>
+
+    <div class="book-gutter" hidden>
+      <div class="gutter-media gutter-media--top"></div>
+      <div class="gutter-contacts" aria-label="Contact">
+        <p>write</p>
+        <p>
+          <a href="mailto:mulleremilie8@gmail.com">an e-mail</a>
+        </p>
+        <p>see me</p>
+        <p>
+          <a
+            href="https://instagram.com/emiliwasabi"
+            target="_blank"
+            rel="noopener"
+            >around here</a
+          >
+        </p>
+        <p>browse</p>
+        <p>
+          <a
+            href="https://www.are.na/emilie-muller/index"
+            target="_blank"
+            rel="noopener noreferrer"
+            >my are.na</a
+          >
+        </p>
+      </div>
+      <div class="gutter-media gutter-media--bottom"></div>
+    </div>
+
+    <section class="about-sheet" id="about" aria-label="About" hidden>
+      <div class="about-layout">
+        <ul class="about-list">
+          The bookcase was already in my bedroom in my flat in Bern. And it was
+          pushed right up against the wall; I had no choice, but that suited me
+          fine. It was the only place for it because my flat in Bern wasn’t very
+          big.
+        </ul>
+
+        <div class="about-main">
+          <p class="about-lead">
+            <strong>Graphic designer &amp; developer</strong> based in Lausanne.
+            Creating visual systems through graphic identities, with a special
+            interest in books, archives and indexes.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <aside class="jaquette" aria-label="Navigation">
+      <div class="jaquette-inner">
+        <nav class="nav-links">
+          <div class="nav-index-branch">
+            <a href="#top" class="nav-index">index</a>
+            <ul
+              class="history-tree"
+              id="history-tree"
+              aria-label="Projets visités"
+              hidden
+            ></ul>
+          </div>
+          <a href="#about" class="nav-about">about</a>
+          <span class="separator"></span>
+          <a href="#colophon">colophon</a>
+        </nav>
+      </div>
+    </aside>
+
+    <script src="./js/render-index.js" defer></script>
+    <script src="./js/render-gutter.js" defer></script>
+    <script src="./js/gutter-playful.js" defer></script>
+    <script src="./js/symbols.js" defer></script>
+    <script src="./js/info-hover.js" defer></script>
+    <script src="./js/page-turn.js" defer></script>
+    <script src="./js/jaquette-reveal.js" defer></script>
+    <script src="./js/history.js" defer></script>
+  </body>
+</html>

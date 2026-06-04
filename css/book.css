@@ -1,0 +1,231 @@
+.book-page {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.book-layer {
+  position: absolute;
+  inset: 0;
+  display: none;
+}
+
+body[data-page="1"] .book-layer--cover {
+  display: block;
+}
+
+body[data-page="2"] .book-layer--spread,
+body[data-page="3"] .book-layer--spread {
+  display: block;
+}
+
+.layer-scroll {
+  position: relative;
+  z-index: 3;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.book-layer .book-surface {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.book-layer--cover .cover-under {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.book-layer--cover .book-surface--cover {
+  z-index: 2;
+}
+
+.book-layer--cover .layer-scroll--cover {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+}
+
+.cover-under {
+  pointer-events: none;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.cover-under .index-host--cover {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: calc(50vw - var(--gutter-width) / 2);
+  min-height: 100vh;
+}
+
+.symbol-host--cover .symbol-layer {
+  position: relative;
+  width: calc(50vw - var(--gutter-width) / 2);
+  min-height: 100vh;
+}
+
+.book-surface--cover {
+  background: var(--paper);
+}
+
+.book-layer--spread .spread-under {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.book-layer--spread .book-surface--spread {
+  z-index: 2;
+  background: var(--paper);
+}
+
+.spread-under .cover-text-host--under {
+  position: absolute;
+  inset: 0;
+}
+
+.spread-under .symbol-host--under {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(50vw - var(--gutter-width) / 2);
+  min-height: 100vh;
+}
+
+.spread-under .index-host--under,
+.spread-under .about-host--under {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: calc(50vw - var(--gutter-width) / 2);
+  min-height: 100vh;
+  padding: var(--index-pad-top) var(--index-pad-right) var(--index-pad-bottom)
+    var(--index-pad-left);
+  color: var(--ink);
+  font-size: var(--index-size);
+  line-height: 1.55;
+  pointer-events: none;
+}
+
+.book-surface::before,
+.book-surface::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.book-surface::before {
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.012) 0px,
+    rgba(0, 0, 0, 0.012) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+}
+
+.book-surface--cover::after {
+  display: none;
+}
+
+.book-surface--spread::after {
+  display: none;
+}
+
+.book-columns {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns:
+    calc(50vw - var(--gutter-width) / 2)
+    var(--gutter-width)
+    calc(50vw - var(--gutter-width) / 2);
+  width: 100vw;
+  height: 100vh;
+}
+
+.book-column {
+  min-width: 0;
+  height: 100vh;
+}
+
+.book-column--right {
+  position: relative;
+}
+
+.book-column--right .layer-scroll--index,
+.book-column--right .layer-scroll--about {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+}
+
+body[data-page="3"] .book-column--left {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+body[data-page="2"] .layer-scroll--about {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+body[data-page="3"] .layer-scroll--index {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.symbol-host--above .symbol-layer {
+  position: relative;
+  width: 100%;
+  min-height: 140vh;
+}
+
+.symbol {
+  position: absolute;
+  width: clamp(135px, 15.5vw, 190px);
+  height: clamp(135px, 15.5vw, 190px);
+  object-fit: contain;
+  opacity: 1;
+}
+
+.page-content {
+  position: relative;
+  min-height: 100vh;
+  padding: var(--page-pad);
+  background: transparent;
+  pointer-events: none;
+}
+
+.page-content .top-content,
+.page-content .page-number {
+  pointer-events: auto;
+}
+
+.page-number {
+  margin: 0;
+  text-align: right;
+  font-size: var(--text-size);
+}
+
+body[data-page="1"] {
+  background: var(--paper-under);
+}
+
+body[data-page="2"],
+body[data-page="3"] {
+  background: var(--paper-under);
+}

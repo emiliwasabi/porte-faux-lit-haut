@@ -1,0 +1,97 @@
+{
+  "practices": [
+    {
+      "id": "web",
+      "letter": "A",
+      "label": "web",
+      "style": "filled"
+    },
+    {
+      "id": "identity",
+      "letter": "B",
+      "label": "visual identities",
+      "style": "filled"
+    },
+    {
+      "id": "editorial",
+      "letter": "C",
+      "label": "editorial design",
+      "style": "outline"
+    }
+  ],
+  "projects": [
+    {
+      "id": "awiar",
+      "slug": "awiar",
+      "title": "A website is a room",
+      "description": "print, 3D, poster design.",
+      "practice": "web",
+      "indent": 0,
+      "folder": "assets/projects/awiar",
+      "images": [
+        "awiar1.jpg",
+        "awiar2.jpg",
+        "awiar3.jpg",
+        "awiar4.jpg",
+        "awiar5.jpg"
+      ]
+    },
+    {
+      "id": "kunstmuseum",
+      "slug": "kunstmuseum",
+      "title": "Bündner Kunst Museum",
+      "description": "website, visual identity.",
+      "practice": "identity",
+      "indent": 1,
+      "folder": "assets/projects/kunstmuseum",
+      "images": ["km1.jpg", "km2.jpg", "km3.jpg", "km4.jpg", "km5.jpg"]
+    },
+    {
+      "id": "prettylucky",
+      "slug": "prettylucky",
+      "title": "Pretty Lucky",
+      "description": "poster design.",
+      "practice": "identity",
+      "indent": 2,
+      "folder": "assets/projects/prettylucky",
+      "images": [
+        "prettylucky1.jpeg",
+        "prettylucky2.jpeg",
+        "prettylucky3.jpeg",
+        "prettylucky4.jpg"
+      ]
+    },
+    {
+      "id": "librarynth",
+      "slug": "librarynth",
+      "title": "Librarynth",
+      "description": "website, archive, visual identity.",
+      "practice": "editorial",
+      "indent": 0,
+      "folder": "assets/projects/librarynth",
+      "images": [
+        "librarynth1.jpeg",
+        "librarynth2.jpg",
+        "librarynth3.png",
+        "librarynth4.png",
+        "librarynth5.jpeg"
+      ]
+    },
+    {
+      "id": "lottof",
+      "slug": "lottof",
+      "title": "Lottofprints",
+      "description": "print, poster, event.",
+      "practice": "editorial",
+      "indent": 1,
+      "folder": "assets/projects/lottof",
+      "images": [
+        "lottof1.jpg",
+        "lottof2.jpg",
+        "lottof3.jpg",
+        "lottof4.jpeg",
+        "lottof5.jpeg"
+      ]
+    }
+  ]
+}

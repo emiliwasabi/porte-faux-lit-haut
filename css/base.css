@@ -1,0 +1,66 @@
+@font-face {
+  font-family: "ABC Diatype";
+  src: url("../assets/fonts/ABCDiatype-Medium-Trial.otf") format("opentype");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  --paper: rgba(252, 252, 250, 0.94);
+  --paper-solid: #fcfcfa;
+  --paper-under: #ebe6dc;
+  --ink: #543f3f;
+  --text-size: clamp(0.98rem, 1vw, 1.06rem);
+  --index-size: clamp(0.76rem, 0.92vw, 0.88rem);
+  --page-pad: clamp(20px, 3.8vw, 42px);
+  --line-height: 0.4;
+  --spine-clearance: clamp(1.5rem, 4.5vw, 3.25rem);
+  --gutter-width: clamp(72px, 9vw, 112px);
+  --jaquette-width: min(320px, 38vw);
+  --jaquette-peek: clamp(6rem, 6vw, 6rem);
+  --jaquette-inset: 5.3vw;
+  --index-pad-top: clamp(56px, 9vh, 96px);
+  --index-pad-right: clamp(28px, 5vw, 64px);
+  --index-pad-bottom: clamp(48px, 8vh, 80px);
+  --index-pad-left: calc(clamp(14px, 2.8vw, 32px) + var(--spine-clearance));
+  --motion-soft: 0.55s cubic-bezier(0.33, 1, 0.45, 1);
+  color: var(--ink);
+  font-family: "ABC Diatype", "Helvetica Neue", Arial, sans-serif;
+  background: var(--paper-solid);
+}
+
+.layer-scroll,
+.jaquette-inner {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.layer-scroll::-webkit-scrollbar,
+.jaquette-inner::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-soft: 0ms;
+  }
+}

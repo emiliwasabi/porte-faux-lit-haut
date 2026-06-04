@@ -1,0 +1,57 @@
+@media (max-width: 700px) {
+  body {
+    --index-pad-top: 64px;
+    --index-pad-right: 12px;
+    --index-pad-bottom: 48px;
+    --index-pad-left: calc(10px + var(--spine-clearance));
+  }
+
+  .index-host--cover .index-sheet,
+  .index-host--above .index-sheet,
+  .index-host--under .index-sheet {
+    --index-sheet-max: min(46ch, calc(100% - var(--spine-clearance) - 12px));
+  }
+
+  .top-content {
+    margin-top: 60px;
+  }
+
+  .left-column,
+  .right-column {
+    max-width: min(34ch, 100%);
+  }
+
+  .left-column {
+    padding-right: 2px;
+  }
+
+  .right-column {
+    padding-left: 2px;
+  }
+
+  .right-column.contacts {
+    transform: rotate(12deg);
+    transform-origin: right top;
+  }
+
+  .jaquette {
+    --jaquette-width: min(260px, 52vw);
+    --jaquette-peek: clamp(1.5rem, 6vw, 2.5rem);
+  }
+
+  .symbol {
+    width: clamp(120px, 30vw, 165px);
+    height: clamp(120px, 30vw, 165px);
+  }
+
+  .index-host--cover .index-sheet,
+  .index-host--above .index-sheet,
+  .index-host--under .index-sheet {
+    --index-indent-1: 1.2rem;
+    --index-indent-2: 2.4rem;
+  }
+
+  .index-marker {
+    left: -1.25rem;
+  }
+}

@@ -1,0 +1,109 @@
+.layer-scroll--gutter {
+  overflow-x: visible;
+}
+
+.book-gutter {
+  width: 100%;
+  min-height: 100vh;
+  padding: 0;
+  font-family: "ABC Diatype", "Helvetica Neue", Arial, sans-serif;
+  font-size: var(--index-size);
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(0.85rem, 1.8vh, 1.25rem);
+}
+
+.gutter-host--cover {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: var(--gutter-width);
+  min-height: 100vh;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.gutter-host--above {
+  width: 100%;
+  pointer-events: none;
+}
+
+body[data-page="1"] .gutter-contacts a {
+  pointer-events: none;
+}
+
+body[data-page="2"] .gutter-contacts a,
+body[data-page="3"] .gutter-contacts a {
+  pointer-events: auto;
+}
+
+.gutter-contacts {
+  width: max-content;
+  max-width: calc(var(--gutter-width) * 2.2);
+  margin: 0;
+  padding: 0 0 clamp(0.35rem, 0.7vh, 0.55rem);
+  line-height: 1.08;
+  text-align: center;
+  transform: rotate(-16deg);
+  transform-origin: center center;
+}
+
+.gutter-contacts .gutter-label {
+  opacity: 0.42;
+  letter-spacing: 0.5em;
+}
+
+.gutter-contacts p {
+  margin: 0;
+}
+
+.gutter-contacts .gutter-letter {
+  display: inline-block;
+  transform-origin: center center;
+  vertical-align: baseline;
+}
+
+.gutter-contacts a {
+  color: inherit;
+  text-decoration: none;
+  word-break: break-word;
+}
+
+.gutter-contacts a:hover {
+  opacity: 0.55;
+}
+
+.gutter-media {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(0.35rem, 0.75vh, 0.6rem);
+  width: 100%;
+}
+
+.gutter-item {
+  margin: 0;
+  width: 100%;
+}
+
+.gutter-img {
+  display: block;
+  width: 100%;
+  max-width: var(--gutter-width);
+  height: auto;
+  object-fit: cover;
+}
+
+@media (max-width: 900px) {
+  .gutter-contacts {
+    transform: rotate(-12deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gutter-contacts {
+    transform: none;
+  }
+}
