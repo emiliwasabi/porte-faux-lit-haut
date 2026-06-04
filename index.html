@@ -19,6 +19,13 @@
           <div class="page-content">
             <p class="page-number">1</p>
             <div class="cover-text-host cover-text-host--above"></div>
+            <div class="ascii-chair-host" aria-hidden="true">
+              <pre
+                class="ascii-chair"
+                role="img"
+                aria-label="Chaise ASCII"
+              ></pre>
+            </div>
           </div>
         </div>
       </div>
@@ -34,7 +41,11 @@
         <div class="book-columns">
           <div class="book-column book-column--left">
             <div class="layer-scroll layer-scroll--left">
-              <div class="symbol-host symbol-host--above"></div>
+              <div
+                class="project-gallery-host"
+                aria-label="Images du projet"
+                hidden
+              ></div>
             </div>
           </div>
 
@@ -139,9 +150,10 @@
 
     <script src="./js/render-index.js" defer></script>
     <script src="./js/render-gutter.js" defer></script>
+    <script src="./js/render-project-gallery.js" defer></script>
     <script src="./js/gutter-playful.js" defer></script>
-    <script src="./js/symbols.js" defer></script>
     <script src="./js/info-hover.js" defer></script>
+    <script src="./js/ascii-chair.js" defer></script>
     <script src="./js/page-turn.js" defer></script>
     <script src="./js/jaquette-reveal.js" defer></script>
     <script src="./js/history.js" defer></script>

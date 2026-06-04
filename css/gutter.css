@@ -30,6 +30,10 @@
   pointer-events: none;
 }
 
+body[data-page="1"] .gutter-contacts {
+  display: none;
+}
+
 body[data-page="1"] .gutter-contacts a {
   pointer-events: none;
 }
@@ -86,6 +90,20 @@ body[data-page="3"] .gutter-contacts a {
 .gutter-item {
   margin: 0;
   width: 100%;
+  opacity: 1;
+  transition: opacity 0.4s cubic-bezier(0.33, 1, 0.45, 1);
+}
+
+.book-gutter.is-project-sync .gutter-item {
+  opacity: 0.16;
+}
+
+.book-gutter.is-project-sync .gutter-item.is-active {
+  opacity: 1;
+}
+
+.book-gutter.is-project-sync .gutter-contacts {
+  opacity: 0.38;
 }
 
 .gutter-img {
@@ -105,5 +123,9 @@ body[data-page="3"] .gutter-contacts a {
 @media (prefers-reduced-motion: reduce) {
   .gutter-contacts {
     transform: none;
+  }
+
+  .gutter-item {
+    transition: none;
   }
 }

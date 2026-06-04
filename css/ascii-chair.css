@@ -1,0 +1,41 @@
+.ascii-chair-host {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+body[data-page="1"] .ascii-chair-host {
+  display: block;
+}
+
+.ascii-chair {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  font-family: ui-monospace, "SF Mono", Monaco, "Cascadia Mono", monospace;
+  font-size: clamp(9px, 1.05vw, 13px);
+  line-height: 1.12;
+  letter-spacing: 0;
+  color: var(--ink);
+  background: transparent;
+  white-space: pre;
+  cursor: default;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  pointer-events: auto;
+  transition: transform var(--motion-soft);
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ascii-chair {
+    transition: none;
+  }
+}

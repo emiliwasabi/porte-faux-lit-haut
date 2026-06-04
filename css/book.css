@@ -68,6 +68,10 @@ body[data-page="3"] .book-layer--spread {
   min-height: 100vh;
 }
 
+.symbol-host {
+  display: none;
+}
+
 .symbol-host--cover .symbol-layer {
   position: relative;
   width: calc(50vw - var(--gutter-width) / 2);

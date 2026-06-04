@@ -120,6 +120,7 @@ document.addEventListener("click", (event) => {
   if (target.closest(".jaquette")) {
     if (target.closest(".nav-index")) {
       event.preventDefault();
+      document.dispatchEvent(new CustomEvent("indexreset"));
       goToIndexPage();
       return;
     }

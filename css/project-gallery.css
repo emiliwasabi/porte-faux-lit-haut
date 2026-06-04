@@ -1,0 +1,24 @@
+.project-gallery-host {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.project-gallery {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.project-gallery__item {
+  margin: 0;
+  width: 100%;
+}
+
+.project-gallery__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  vertical-align: middle;
+}

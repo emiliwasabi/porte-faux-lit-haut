@@ -62,4 +62,5 @@ function renderRandomSymbol() {
   }
 }
 
-renderRandomSymbol();
+// Decorative left-page symbols — disabled for now.
+// renderRandomSymbol();
