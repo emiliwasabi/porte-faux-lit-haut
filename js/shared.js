@@ -11,19 +11,23 @@
     (entries) => {
       for (const entry of entries) {
         if (!entry.isIntersecting) continue;
-        const img = entry.target;
-        const url = img.dataset.src;
+        const el = entry.target;
+        const url = el.dataset.src;
         if (!url) {
-          lazyObserver.unobserve(img);
+          lazyObserver.unobserve(el);
           continue;
         }
         warmUrl(url)
           .then(() => {
-            img.src = url;
-            img.removeAttribute("data-src");
+            el.src = url;
+            el.removeAttribute("data-src");
+            if (el instanceof HTMLVideoElement) {
+              el.load();
+              el.play().catch(() => {});
+            }
           })
-          .catch(() => img.removeAttribute("data-src"));
-        lazyObserver.unobserve(img);
+          .catch(() => el.removeAttribute("data-src"));
+        lazyObserver.unobserve(el);
       }
     },
     { rootMargin: "280px 0px", threshold: 0.01 },
@@ -33,7 +37,23 @@
     if (warmedUrls.has(url)) return Promise.resolve(url);
     if (warmQueue.has(url)) return warmQueue.get(url);
 
+    const isVideo = /\.(mp4|webm|mov)(\?|#|$)/i.test(url);
     const promise = new Promise((resolve, reject) => {
+      if (isVideo) {
+        const probe = document.createElement("video");
+        probe.preload = "metadata";
+        probe.onloadeddata = () => {
+          warmedUrls.add(url);
+          warmQueue.delete(url);
+          resolve(url);
+        };
+        probe.onerror = () => {
+          warmQueue.delete(url);
+          reject(new Error(`Failed to load ${url}`));
+        };
+        probe.src = url;
+        return;
+      }
       const probe = new Image();
       probe.decoding = "async";
       probe.onload = () => {
@@ -51,6 +71,8 @@
     warmQueue.set(url, promise);
     return promise;
   }
+
+  window.isVideoMedia = (filename) => /\.(mp4|webm|mov)$/i.test(filename);
 
   window.getProjectsData = async () => {
     if (projectsCache) return projectsCache;
@@ -77,26 +99,46 @@
     return `./${folder}/${filename}`;
   };
 
-  window.assignImageSrc = (img, url, { eager = false, high = false, sizes } = {}) => {
-    if (!(img instanceof HTMLImageElement) || !url) return;
+  window.assignProjectMedia = (el, url, { eager = false, high = false, sizes } = {}) => {
+    if (!url) return;
 
-    img.decoding = "async";
-    if (sizes) img.sizes = sizes;
+    if (el instanceof HTMLVideoElement) {
+      el.muted = true;
+      el.loop = true;
+      el.playsInline = true;
+      if (eager) {
+        el.preload = "auto";
+        el.src = url;
+        warmUrl(url).then(() => el.play().catch(() => {}));
+      } else {
+        el.preload = "none";
+        el.dataset.src = url;
+        lazyObserver.observe(el);
+      }
+      return;
+    }
+
+    if (!(el instanceof HTMLImageElement)) return;
+
+    el.decoding = "async";
+    if (sizes) el.sizes = sizes;
 
     if (eager) {
-      img.loading = "eager";
-      img.fetchPriority = high ? "high" : "auto";
-      img.src = url;
+      el.loading = "eager";
+      el.fetchPriority = high ? "high" : "auto";
+      el.src = url;
       warmUrl(url);
       return;
     }
 
-    img.loading = "lazy";
-    img.fetchPriority = "low";
-    img.dataset.src = url;
-    if (!img.getAttribute("src")) img.src = PLACEHOLDER;
-    lazyObserver.observe(img);
+    el.loading = "lazy";
+    el.fetchPriority = "low";
+    el.dataset.src = url;
+    if (!el.getAttribute("src")) el.src = PLACEHOLDER;
+    lazyObserver.observe(el);
   };
+
+  window.assignImageSrc = (img, url, opts) => window.assignProjectMedia(img, url, opts);
 
   window.preloadProjectImages = (project, limit = 2) => {
     if (!project?.images?.length) return;

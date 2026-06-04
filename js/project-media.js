@@ -63,18 +63,31 @@
     };
   }
 
+  function appendMedia(fig, project, filename, className, { eager, high, sizes }) {
+    const url = projectImageSrc(project, filename);
+    if (isVideoMedia(filename)) {
+      const video = document.createElement("video");
+      video.className = className;
+      video.setAttribute("aria-hidden", "true");
+      assignProjectMedia(video, url, { eager, high });
+      fig.append(video);
+      return;
+    }
+    const img = document.createElement("img");
+    img.className = className;
+    img.alt = "";
+    assignProjectMedia(img, url, { eager, high, sizes });
+    fig.append(img);
+  }
+
   function gutterFigure(item, eager) {
     const fig = document.createElement("figure");
     fig.className = "gutter-item";
     fig.dataset.imageIndex = String(item.imageIndex);
-    const img = document.createElement("img");
-    img.className = "gutter-img";
-    img.alt = "";
-    assignImageSrc(img, projectImageSrc(item.project, item.filename), {
+    appendMedia(fig, item.project, item.filename, "gutter-img", {
       eager,
       sizes: "var(--gutter-width)",
     });
-    fig.append(img);
     return fig;
   }
 
@@ -130,15 +143,11 @@
       const fig = document.createElement("figure");
       fig.className = "project-gallery__item";
       fig.dataset.imageIndex = String(i);
-      const img = document.createElement("img");
-      img.className = "project-gallery__img";
-      img.alt = "";
-      assignImageSrc(img, projectImageSrc(project, filename), {
+      appendMedia(fig, project, filename, "project-gallery__media", {
         eager: i === 0,
         high: i === 0,
         sizes: "(max-width: 900px) 100vw, 50vw",
       });
-      fig.append(img);
       wrap.append(fig);
     });
     galleryHost.replaceChildren(wrap);

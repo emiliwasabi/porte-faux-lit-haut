@@ -18,6 +18,8 @@
       "label": "editorial design",
       "style": "outline"
     }
+
+    
   ],
   "projects": [
     {
@@ -91,6 +93,132 @@
         "lottof3.jpg",
         "lottof4.jpeg",
         "lottof5.jpeg"
+      ]
+    },
+    {
+      "id": "athlete-a",
+      "slug": "athlete-a",
+      "title": "Athlete A",
+      "description": "print.",
+      "practice": "identity",
+      "indent": 0,
+      "folder": "assets/projects/athleteA",
+      "images": [
+        "athleteA2.jpg",
+        "athleteA3.jpg",
+        "athleteA4.jpg",
+        "athleteA5.jpg",
+        "athleteA6.jpg"
+      ]
+    },
+    {
+      "id": "fall-workshop",
+      "slug": "fall-workshop",
+      "title": "Fall Workshop",
+      "description": "workshop, print, video.",
+      "practice": "editorial",
+      "indent": 2,
+      "folder": "assets/projects/fallworkshop",
+      "images": [
+        "main23.jpg",
+        "fallworkshop7.jpg",
+        "Screenshot 2025-03-24 at 18.57.01.png",
+        "fallworkshorizontal.mp4",
+        "fallworkshopvertical.mp4"
+      ]
+    },
+    {
+      "id": "the-last-parcel",
+      "slug": "the-last-parcel",
+      "title": "The Last Parcel",
+      "description": "website, print.",
+      "practice": "web",
+      "indent": 1,
+      "folder": "assets/projects/fermented",
+      "images": [
+        "mockupfermented1.jpeg",
+        "mockupfermented2.jpeg",
+        "fermentedweb3.png",
+        "fermentedweb5.png"
+      ]
+    },
+    {
+      "id": "modular",
+      "slug": "modular",
+      "title": "Modular",
+      "description": "motion, identity.",
+      "practice": "identity",
+      "indent": 1,
+      "folder": "assets/projects/modular",
+      "images": [
+        "modular1.png",
+        "modular2.mp4",
+        "modular3.mp4",
+        "modular4.mp4",
+        "modular5.mp4"
+      ]
+    },
+    {
+      "id": "pepite",
+      "slug": "pepite",
+      "title": "Pépite",
+      "description": "identity, print, website.",
+      "practice": "editorial",
+      "indent": 2,
+      "folder": "assets/projects/pepite",
+      "images": [
+        "pepite8.jpg",
+        "pepite9.jpg",
+        "pepite10.jpg",
+        "pepite3-topaz.jpeg",
+        "pepite5.mp4"
+      ]
+    },
+    {
+      "id": "pink-panther",
+      "slug": "pink-panther",
+      "title": "Pink Panther",
+      "description": "type design.",
+      "practice": "identity",
+      "indent": 2,
+      "folder": "assets/projects/pinkpanther",
+      "images": [
+        "pinkpanther8.jpg",
+        "pinkpanther12.jpg",
+        "pinkpanther13.jpg",
+        "pinkpanther16.jpg",
+        "pinkpanther17.jpg"
+      ]
+    },
+    {
+      "id": "seaside",
+      "slug": "seaside",
+      "title": "Seaside",
+      "description": "motion, 3D.",
+      "practice": "web",
+      "indent": 2,
+      "folder": "assets/projects/seaside",
+      "images": [
+        "seaside1.png",
+        "seasidesneakpik4.mp4",
+        "seasidesneakpik5.mp4",
+        "seasidesneakpik6.mp4"
+      ]
+    },
+    {
+      "id": "silver-steel",
+      "slug": "silver-steel",
+      "title": "Silver Steel",
+      "description": "type design.",
+      "practice": "editorial",
+      "indent": 2,
+      "folder": "assets/projects/silversteel",
+      "images": [
+        "silversteel1.jpg",
+        "silversteel6.jpg",
+        "silversteel8.jpg",
+        "silversteel10.jpg",
+        "silversteel11.jpg"
       ]
     }
   ]

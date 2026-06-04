@@ -127,6 +127,11 @@ body[data-page="3"] .gutter-contacts a {
   content-visibility: auto;
 }
 
+video.gutter-img {
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+}
+
 @media (max-width: 900px) {
   .gutter-contacts {
     transform: rotate(-12deg);
