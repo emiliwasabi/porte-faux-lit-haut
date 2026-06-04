@@ -1,11 +1,22 @@
 .layer-scroll--gutter {
   overflow-x: visible;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.book-gutter.is-index-mix {
+  padding-top: clamp(0.75rem, 2vh, 1.25rem);
+  padding-bottom: clamp(1.5rem, 4vh, 2.5rem);
+}
+
+.book-gutter.is-index-mix .gutter-media--bottom {
+  padding-bottom: clamp(0.5rem, 1.5vh, 1rem);
 }
 
 .book-gutter {
   width: 100%;
-  min-height: 100vh;
-  padding: 0;
+  min-height: auto;
+  padding: clamp(1.25rem, 3vh, 2rem) 0;
   font-family: "ABC Diatype", "Helvetica Neue", Arial, sans-serif;
   font-size: var(--index-size);
   color: var(--ink);

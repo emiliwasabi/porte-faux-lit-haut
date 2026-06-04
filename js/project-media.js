@@ -2,6 +2,7 @@
   const GUTTER_TOP = 4;
   const GUTTER_CONTACTS_H = 160;
   const GUTTER_STEP = 72;
+  const INDEX_GUTTER_MAX = 16;
 
   const bookGutter = document.querySelector(".book-gutter");
   const galleryHost = document.querySelector(".project-gallery-host");
@@ -14,24 +15,18 @@
 
   const bySlug = (slug) => projects.find((p) => p.slug === slug);
 
-  function gutterPartitionAll() {
-    const top = [];
-    const bottom = [];
+  function gutterPartitionIndex() {
+    const items = [];
     for (const project of projects) {
       const files = project.images || [];
       if (!files.length) continue;
-      if (top.length < GUTTER_TOP) {
-        top.push({ project, filename: files[0], imageIndex: 0 });
-        for (let i = 1; i < files.length; i += 1) {
-          bottom.push({ project, filename: files[i], imageIndex: i });
-        }
-      } else {
-        files.forEach((filename, imageIndex) => {
-          bottom.push({ project, filename, imageIndex });
-        });
-      }
+      items.push({ project, filename: files[0], imageIndex: 0 });
+      if (items.length >= INDEX_GUTTER_MAX) break;
     }
-    return { top, bottom };
+    return {
+      top: items.slice(0, GUTTER_TOP),
+      bottom: items.slice(GUTTER_TOP),
+    };
   }
 
   function gutterPartitionOne(project) {
@@ -50,7 +45,9 @@
     return Array.from({ length: min }, (_, i) => items[i % items.length]);
   }
 
-  function fillGutter(partition) {
+  function fillGutter(partition, forProject) {
+    if (!forProject) return partition;
+
     const flat = [...partition.top, ...partition.bottom];
     const min = Math.ceil(
       Math.max(window.innerHeight - GUTTER_CONTACTS_H, GUTTER_STEP * GUTTER_TOP) /
@@ -111,11 +108,15 @@
     if (!top || !bottom || !projects.length) return;
 
     activeSlug = slug;
-    const part = fillGutter(slug ? gutterPartitionOne(bySlug(slug)) : gutterPartitionAll());
+    const partition = slug
+      ? gutterPartitionOne(bySlug(slug))
+      : gutterPartitionIndex();
+    const part = fillGutter(partition, Boolean(slug));
     const eager = slug ? 2 : 1;
     renderGutterGroup(top, part.top, eager);
     renderGutterGroup(bottom, part.bottom, Math.max(0, eager - part.top.length));
     bookGutter?.classList.toggle("is-project-sync", Boolean(slug));
+    bookGutter?.classList.toggle("is-index-mix", !slug);
     setGutterHighlight(slug ? 0 : -1);
   }
 
