@@ -89,9 +89,12 @@
 
       const img = document.createElement("img");
       img.className = "project-gallery__img";
-      img.src = projectImageSrc(project, filename);
       img.alt = "";
-      img.loading = "lazy";
+      assignImageSrc(img, projectImageSrc(project, filename), {
+        eager: imageIndex === 0,
+        high: imageIndex === 0,
+        sizes: "(max-width: 900px) 100vw, 50vw",
+      });
 
       figure.append(img);
       gallery.append(figure);
@@ -100,6 +103,7 @@
     galleryHost.replaceChildren(gallery);
     galleryHost.hidden = false;
 
+    preloadProjectImages(project, 2);
     if (leftScroll) leftScroll.scrollTop = 0;
     observeGalleryImages();
     dispatchGalleryImageActive(0);
@@ -119,10 +123,7 @@
     if (!galleryHost) return;
 
     try {
-      const response = await fetch("./data/projects.json");
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-      const data = await response.json();
+      const data = await getProjectsData();
       projectBySlug = Object.fromEntries(
         (data.projects || []).map((project) => [project.slug, project]),
       );

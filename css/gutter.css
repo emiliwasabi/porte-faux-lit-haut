@@ -94,8 +94,19 @@ body[data-page="3"] .gutter-contacts a {
   transition: opacity 0.4s cubic-bezier(0.33, 1, 0.45, 1);
 }
 
+.book-gutter.is-project-sync {
+  min-height: 100vh;
+  justify-content: space-between;
+}
+
+.book-gutter.is-project-sync .gutter-media--top,
+.book-gutter.is-project-sync .gutter-media--bottom {
+  flex: 1 1 0;
+  justify-content: space-evenly;
+}
+
 .book-gutter.is-project-sync .gutter-item {
-  opacity: 0.16;
+  opacity: var(--ghost-opacity);
 }
 
 .book-gutter.is-project-sync .gutter-item.is-active {
@@ -103,7 +114,8 @@ body[data-page="3"] .gutter-contacts a {
 }
 
 .book-gutter.is-project-sync .gutter-contacts {
-  opacity: 0.38;
+  opacity: var(--ghost-opacity);
+  flex-shrink: 0;
 }
 
 .gutter-img {
@@ -112,6 +124,7 @@ body[data-page="3"] .gutter-contacts a {
   max-width: var(--gutter-width);
   height: auto;
   object-fit: cover;
+  content-visibility: auto;
 }
 
 @media (max-width: 900px) {

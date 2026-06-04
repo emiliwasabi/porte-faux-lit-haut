@@ -34,10 +34,7 @@ async function renderProjectIndex() {
   if (!indexBody) return;
 
   try {
-    const response = await fetch("./data/projects.json");
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-    const data = await response.json();
+    const data = await getProjectsData();
     const practiceById = Object.fromEntries(
       (data.practices || []).map((item) => [item.id, item])
     );

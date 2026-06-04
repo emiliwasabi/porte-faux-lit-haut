@@ -57,9 +57,7 @@ function renderHistory(history = visitHistory) {
 
 async function loadProjects() {
   try {
-    const response = await fetch("./data/projects.json");
-    if (!response.ok) return;
-    const data = await response.json();
+    const data = await getProjectsData();
     projectBySlug = Object.fromEntries(
       data.projects.map((project) => [project.slug, project]),
     );

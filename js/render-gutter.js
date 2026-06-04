@@ -22,14 +22,14 @@
       if (!files.length) continue;
 
       if (top.length < GUTTER_TOP_COUNT) {
-        top.push({ project, filename: files[0] });
+        top.push({ project, filename: files[0], imageIndex: 0 });
         for (let i = 1; i < files.length; i += 1) {
-          bottom.push({ project, filename: files[i] });
+          bottom.push({ project, filename: files[i], imageIndex: i });
         }
       } else {
-        for (const filename of files) {
-          bottom.push({ project, filename });
-        }
+        files.forEach((filename, imageIndex) => {
+          bottom.push({ project, filename, imageIndex });
+        });
       }
     }
 
@@ -38,14 +38,18 @@
 
   function partitionGutterImagesForProject(project) {
     const files = project.images || [];
-    const items = files.map((filename) => ({ project, filename }));
+    const items = files.map((filename, imageIndex) => ({
+      project,
+      filename,
+      imageIndex,
+    }));
     return {
       top: items.slice(0, GUTTER_TOP_COUNT),
       bottom: items.slice(GUTTER_TOP_COUNT),
     };
   }
 
-  function createGutterFigure(project, filename, imageIndex) {
+  function createGutterFigure(project, filename, imageIndex, eager = false) {
     const figure = document.createElement("figure");
     figure.className = "gutter-item";
     figure.dataset.imageIndex = String(imageIndex);
@@ -53,20 +57,27 @@
 
     const img = document.createElement("img");
     img.className = "gutter-img";
-    img.src = projectImageSrc(project, filename);
     img.alt = "";
-    img.loading = "lazy";
+    assignImageSrc(img, projectImageSrc(project, filename), {
+      eager,
+      sizes: "var(--gutter-width)",
+    });
     figure.append(img);
 
     return figure;
   }
 
-  function renderImageGroup(host, items, startIndex = 0) {
+  function renderImageGroup(host, items, { eagerCount = 0 } = {}) {
     if (!host) return;
     host.replaceChildren();
-    items.forEach((item, offset) => {
+    items.forEach((item, index) => {
       host.appendChild(
-        createGutterFigure(item.project, item.filename, startIndex + offset),
+        createGutterFigure(
+          item.project,
+          item.filename,
+          item.imageIndex ?? 0,
+          index < eagerCount,
+        ),
       );
     });
   }
@@ -123,12 +134,13 @@
     if (!topHost || !bottomHost || !allProjects.length) return;
 
     activeProjectSlug = slug;
-    const partition = slug
-      ? getPartition(slug)
-      : fillPartitionToViewport(getPartition(null));
+    const partition = fillPartitionToViewport(getPartition(slug));
 
-    renderImageGroup(topHost, partition.top, 0);
-    renderImageGroup(bottomHost, partition.bottom, partition.top.length);
+    const eagerSlots = slug ? 2 : 1;
+    renderImageGroup(topHost, partition.top, { eagerCount: eagerSlots });
+    renderImageGroup(bottomHost, partition.bottom, {
+      eagerCount: Math.max(0, eagerSlots - partition.top.length),
+    });
 
     bookGutter?.classList.toggle("is-project-sync", Boolean(slug));
     setGutterHighlight(slug ? 0 : -1);
@@ -140,10 +152,7 @@
     if (!topHost || !bottomHost) return;
 
     try {
-      const response = await fetch("./data/projects.json");
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-      const data = await response.json();
+      const data = await getProjectsData();
       allProjects = data.projects || [];
       renderGutter(null);
     } catch (error) {
@@ -153,7 +162,11 @@
 
   document.addEventListener("projectvisit", (event) => {
     const project = event.detail?.project;
-    if (project?.slug) renderGutter(project.slug);
+    if (project?.slug) {
+      const full = allProjects.find((item) => item.slug === project.slug);
+      if (full) preloadProjectImages(full, 2);
+      renderGutter(project.slug);
+    }
   });
 
   document.addEventListener("galleryimageactive", (event) => {
