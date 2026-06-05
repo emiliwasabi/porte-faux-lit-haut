@@ -23,8 +23,53 @@
     display: none !important;
   }
 
-  .cover-under .index-host--cover,
   .cover-under .gutter-host--cover {
+    display: none;
+  }
+
+  body[data-page="1"],
+  body[data-page="2"],
+  body[data-page="3"] {
+    background: var(--paper-under);
+  }
+
+  .book-surface--cover,
+  .book-surface--spread {
+    background: var(--paper);
+  }
+
+  .cover-under .index-host--cover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    opacity: var(--veil-opacity);
+    pointer-events: none;
+    padding: var(--index-pad-top) calc(var(--jaquette-width) + 0.5rem)
+      var(--index-pad-bottom) var(--index-pad-left);
+  }
+
+  .spread-under .index-host--under,
+  .spread-under .about-host--under {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    opacity: var(--veil-opacity);
+    pointer-events: none;
+    padding: var(--index-pad-top) var(--index-pad-right) var(--index-pad-bottom)
+      var(--index-pad-left);
+  }
+
+  body[data-page="2"] .spread-under .index-host--under {
+    display: none;
+  }
+
+  body[data-page="3"] .spread-under .about-host--under {
     display: none;
   }
 
@@ -57,9 +102,49 @@
     padding-right: calc(var(--jaquette-peek) + 0.5rem);
   }
 
-  .spread-under .index-host--under,
-  .spread-under .about-host--under {
-    display: none !important;
+  body[data-page="2"]:not([data-project]) .layer-scroll--index,
+  body[data-page="3"] .layer-scroll--about,
+  body[data-page="2"][data-project] .layer-scroll--left {
+    background: transparent;
+  }
+
+  body[data-page="2"]:not([data-project]) .layer-scroll--index::before,
+  body[data-page="3"] .layer-scroll--about::before,
+  body[data-page="2"][data-project] .layer-scroll--left::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: var(--paper);
+    pointer-events: none;
+  }
+
+  body[data-page="2"]:not([data-project]) .layer-scroll--index::after,
+  body[data-page="3"] .layer-scroll--about::after,
+  body[data-page="2"][data-project] .layer-scroll--left::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.012) 0px,
+      rgba(0, 0, 0, 0.012) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+  }
+
+  body[data-page="3"] .spread-under .index-host--under {
+    left: 0;
+    right: auto;
+    width: calc(100vw - var(--jaquette-peek));
+    opacity: var(--ghost-opacity);
+    transform: scaleX(-1);
+    transform-origin: center center;
+    padding: var(--index-pad-top) var(--index-pad-right) var(--index-pad-bottom)
+      var(--index-pad-left);
   }
 
   body[data-page="1"] {
