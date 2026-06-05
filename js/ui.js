@@ -63,7 +63,12 @@
   }
 
   document.querySelectorAll(".gutter-contacts p").forEach(letterizeGutter);
-  document.querySelectorAll(".contacts p").forEach(letterizeCover);
+
+  const mobileNav = window.matchMedia("(max-width: 700px)");
+  document.querySelectorAll(".contacts p").forEach((line) => {
+    if (!mobileNav.matches) letterizeCover(line);
+  });
+
   document.querySelectorAll(".about-dash").forEach((el) => {
     letterizeScatter(el, { letterClass: "cover-letter" });
   });
@@ -71,7 +76,7 @@
   const jaquette = document.querySelector(".jaquette");
   const bookOpen = () => {
     const p = document.body.dataset.page;
-    return p === "2" || p === "3";
+    return p === "2" || p === "3" || (p === "1" && mobileNav.matches);
   };
   jaquette?.addEventListener("click", (e) => {
     if (!bookOpen() || e.target.closest(".nav-links a")) return;
