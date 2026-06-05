@@ -9,9 +9,21 @@
   const leftScroll = document.querySelector(".layer-scroll--left");
   const indexScroll = document.querySelector(".layer-scroll--index");
 
+  const mobileBack = document.querySelector(".mobile-back");
+  const mobileMq = window.matchMedia("(max-width: 700px)");
+
   let projects = [];
   let activeSlug = null;
   let galleryObserver = null;
+
+  const isMobile = () => mobileMq.matches;
+
+  function syncProjectState() {
+    document.body.classList.toggle("has-project", Boolean(activeSlug));
+    const showBack =
+      isMobile() && Boolean(activeSlug) && document.body.dataset.page === "2";
+    mobileBack?.toggleAttribute("hidden", !showBack);
+  }
 
   const bySlug = (slug) => projects.find((p) => p.slug === slug);
 
@@ -122,6 +134,11 @@
   }
 
   function renderGutter(slug = activeSlug) {
+    if (isMobile()) {
+      bookGutter?.classList.remove("is-project-sync", "is-index-mix");
+      return;
+    }
+
     const top = document.querySelector(".gutter-media--top");
     const bottom = document.querySelector(".gutter-media--bottom");
     if (!top || !bottom || !projects.length) return;
@@ -151,6 +168,7 @@
       galleryHost.replaceChildren();
       galleryObserver?.disconnect();
       galleryObserver = null;
+      syncProjectState();
       return;
     }
 
@@ -211,6 +229,8 @@
     document.dispatchEvent(
       new CustomEvent("galleryimageactive", { detail: { index: 0 } }),
     );
+    syncProjectState();
+    if (isMobile()) leftScroll?.scrollTo({ top: 0, behavior: "auto" });
   }
 
   function onProjectVisit(slug) {
@@ -227,6 +247,7 @@
     indexScroll?.scrollTo({ top: 0, behavior: "smooth" });
     leftScroll && (leftScroll.scrollTop = 0);
     history.replaceState(null, "", `${location.pathname}${location.search}`);
+    syncProjectState();
   }
 
   document.addEventListener("projectvisit", (e) => {
@@ -237,7 +258,11 @@
       setGutterHighlight(e.detail.index);
   });
   document.addEventListener("indexreset", resetIndex);
+  mobileBack?.addEventListener("click", () => {
+    document.dispatchEvent(new CustomEvent("indexreset"));
+  });
   bookGutter?.addEventListener("click", (e) => {
+    if (isMobile()) return;
     if (document.body.dataset.page !== "2") return;
     const item = e.target.closest(".gutter-item");
     if (!item?.dataset.slug) return;
@@ -262,6 +287,12 @@
       activeSlug = null;
       renderGutter(null);
     } else if (p === 2 && !activeSlug) renderGutter(null);
+    syncProjectState();
+  });
+
+  mobileMq.addEventListener("change", () => {
+    renderGutter(activeSlug);
+    syncProjectState();
   });
 
   let resizeTimer;

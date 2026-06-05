@@ -38,11 +38,6 @@
     transform-origin: right top;
   }
 
-  .jaquette {
-    --jaquette-width: min(260px, 52vw);
-    --jaquette-peek: clamp(1.5rem, 6vw, 2.5rem);
-  }
-
   .symbol {
     width: clamp(120px, 30vw, 165px);
     height: clamp(120px, 30vw, 165px);
