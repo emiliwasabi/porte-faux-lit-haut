@@ -9,10 +9,49 @@
   const leftScroll = document.querySelector(".layer-scroll--left");
   const indexScroll = document.querySelector(".layer-scroll--index");
   const mobileReturn = document.querySelector(".mobile-return");
+  const projectDescription = document.querySelector(".project-description");
+  const lightbox = document.querySelector(".media-lightbox");
+  const lightboxStage = lightbox?.querySelector(".media-lightbox__stage");
+  const lightboxPrevious = lightbox?.querySelector(".media-lightbox__previous");
+  const lightboxNext = lightbox?.querySelector(".media-lightbox__next");
 
   let projects = [];
   let activeSlug = null;
   let galleryObserver = null;
+  let lightboxIndex = 0;
+
+  function closeLightbox() {
+    if (!lightbox || !lightboxStage) return;
+    lightbox.hidden = true;
+    lightboxStage.replaceChildren();
+  }
+
+  function showLightboxMedia(index, direction = 0) {
+    const project = bySlug(activeSlug);
+    if (!project?.images?.length || !lightbox || !lightboxStage) return;
+    lightboxIndex = (index + project.images.length) % project.images.length;
+    const filename = project.images[lightboxIndex];
+    const url = projectImageSrc(project, filename);
+    const media = isVideoMedia(filename)
+      ? document.createElement("video")
+      : document.createElement("img");
+    media.className = "media-lightbox__media";
+    if (direction > 0) media.classList.add("media-lightbox__media--from-right");
+    if (direction < 0) media.classList.add("media-lightbox__media--from-left");
+    media.src = url;
+    if (media instanceof HTMLVideoElement) {
+      media.controls = true;
+      media.autoplay = true;
+      media.loop = true;
+      media.playsInline = true;
+    } else {
+      media.alt = project.title;
+    }
+    lightboxStage.replaceChildren(media);
+    lightbox.hidden = false;
+    lightboxPrevious.disabled = project.images.length < 2;
+    lightboxNext.disabled = project.images.length < 2;
+  }
 
   const bySlug = (slug) => projects.find((p) => p.slug === slug);
 
@@ -214,6 +253,27 @@
     );
   }
 
+  galleryHost?.addEventListener("click", (event) => {
+    const media = event.target.closest(".project-gallery__media");
+    if (!media || !activeSlug) return;
+    event.preventDefault();
+    event.stopPropagation();
+    showLightboxMedia(Number(media.closest(".project-gallery__item")?.dataset.imageIndex));
+  });
+
+  lightbox?.addEventListener("click", (event) => {
+    if (event.target === lightbox) closeLightbox();
+  });
+  lightboxStage?.addEventListener("click", (event) => event.stopPropagation());
+  lightboxPrevious?.addEventListener("click", () => showLightboxMedia(lightboxIndex - 1, -1));
+  lightboxNext?.addEventListener("click", () => showLightboxMedia(lightboxIndex + 1, 1));
+  document.addEventListener("keydown", (event) => {
+    if (lightbox?.hidden) return;
+    if (event.key === "Escape") closeLightbox();
+    if (event.key === "ArrowLeft") showLightboxMedia(lightboxIndex - 1, -1);
+    if (event.key === "ArrowRight") showLightboxMedia(lightboxIndex + 1, 1);
+  });
+
   function syncProjectState() {
     if (activeSlug && document.body.dataset.page === "2") {
       document.body.setAttribute("data-project", activeSlug);
@@ -228,6 +288,10 @@
   function onProjectVisit(slug) {
     const project = bySlug(slug);
     if (project) preloadProjectImages(project, 2);
+    if (projectDescription) {
+      projectDescription.textContent = project?.description || "";
+      projectDescription.hidden = !project?.description;
+    }
     renderGutter(slug);
     renderGallery(slug);
     syncProjectState();
@@ -235,6 +299,11 @@
 
   function resetIndex() {
     activeSlug = null;
+    closeLightbox();
+    if (projectDescription) {
+      projectDescription.textContent = "";
+      projectDescription.hidden = true;
+    }
     renderGallery(null);
     renderGutter(null);
     indexScroll?.scrollTo({ top: 0, behavior: "smooth" });
@@ -292,7 +361,9 @@
 
   getProjectsData()
     .then((data) => {
-      projects = data.projects || [];
+      projects = (data.projects || []).sort(
+        (a, b) => (a.order ?? Infinity) - (b.order ?? Infinity),
+      );
       renderGutter(null);
       syncProjectState();
     })

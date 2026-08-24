@@ -16,13 +16,12 @@
         <div class="book-surface book-surface--cover" aria-hidden="true"></div>
         <div class="layer-scroll layer-scroll--cover">
           <div class="page-content">
-            <p class="page-number">1</p>
             <div class="cover-text-host cover-text-host--above"></div>
           </div>
         </div>
       </div>
 
-      <div class="book-layer book-layer--spread" hidden>
+      <div class="book-layer book-layer--spread">
         <div class="spread-under" aria-hidden="true">
           <div class="cover-text-host cover-text-host--under"></div>
           <div class="index-host index-host--under"></div>
@@ -44,7 +43,7 @@
             <div class="layer-scroll layer-scroll--index">
               <div class="index-host index-host--above"></div>
             </div>
-            <div class="index-legend-host" aria-label="Practice legend"></div>
+            <p class="project-description" hidden></p>
             <div class="layer-scroll layer-scroll--about">
               <div class="about-host about-host--above"></div>
             </div>
@@ -81,14 +80,9 @@
             >around here</a
           >
         </p>
-        <p>browse</p>
+        <p>learn</p>
         <p>
-          <a
-            href="https://www.are.na/emilie-muller/index"
-            target="_blank"
-            rel="noopener noreferrer"
-            >my are.na</a
-          >
+          <a href="#about" class="about-link">about me</a>
         </p>
       </div>
       <div class="gutter-media gutter-media--bottom"></div>
@@ -139,7 +133,13 @@
       return
     </button>
 
-    <aside class="jaquette" aria-label="Navigation">
+    <div class="media-lightbox" hidden aria-label="Media viewer" role="dialog" aria-modal="true">
+      <button type="button" class="media-lightbox__previous" aria-label="Previous media">&larr;</button>
+      <div class="media-lightbox__stage"></div>
+      <button type="button" class="media-lightbox__next" aria-label="Next media">&rarr;</button>
+    </div>
+
+    <aside class="jaquette" aria-label="Navigation" hidden>
       <div class="jaquette-inner">
         <nav class="nav-links">
           <div class="nav-cover-branch" hidden>

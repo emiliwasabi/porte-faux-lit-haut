@@ -8,8 +8,8 @@
   transition:
     right var(--motion-soft);
   background:
-    linear-gradient(180deg, #ffffff 0%, #ffffff 100%),
-    linear-gradient(90deg, #ffff66 0%, #d4ff00 100%);
+    linear-gradient(180deg, #39ff14 0%, #39ff14 100%);
+  color: #ffffff;
   padding: 0;
   z-index: 20;
   display: flex;
@@ -17,6 +17,10 @@
   pointer-events: auto;
   overflow: hidden;
   isolation: isolate;
+}
+
+.jaquette[hidden] {
+  display: none;
 }
 
 .jaquette-inner {

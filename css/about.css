@@ -2,11 +2,11 @@
   width: 100%;
   min-height: 100%;
   pointer-events: none;
+  --index-pad-right-active: calc(var(--jaquette-peek) + clamp(0.75rem, 1.5vw, 1.25rem));
 }
 
 body[data-page="3"] .about-host--above {
   pointer-events: auto;
-  --index-pad-right-active: calc(var(--jaquette-peek) + clamp(0.75rem, 1.5vw, 1.25rem));
   padding: var(--index-pad-top) max(var(--index-pad-right), var(--index-pad-right-active))
     var(--index-pad-bottom) var(--index-pad-left);
 }

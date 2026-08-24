@@ -10,16 +10,21 @@
 .book-layer {
   position: absolute;
   inset: 0;
-  display: none;
+  display: block;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--motion-soft);
 }
 
 body[data-page="1"] .book-layer--cover {
-  display: block;
+  opacity: 1;
+  pointer-events: auto;
 }
 
 body[data-page="2"] .book-layer--spread,
 body[data-page="3"] .book-layer--spread {
-  display: block;
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .layer-scroll {
@@ -105,6 +110,15 @@ body[data-page="3"] .book-layer--spread {
   pointer-events: none;
 }
 
+.spread-under .about-host--under {
+  --index-pad-right-active: calc(
+    var(--jaquette-peek) + clamp(0.75rem, 1.5vw, 1.25rem)
+  );
+  padding-right: max(var(--index-pad-right), var(--index-pad-right-active));
+  font-size: var(--index-flow-size);
+  line-height: 1.18;
+}
+
 body[data-page="3"] .spread-under .index-host--under {
   right: auto;
   left: 0;
@@ -166,6 +180,7 @@ body[data-page="3"] .spread-under .index-host--under {
   position: absolute;
   inset: 0;
   width: 100%;
+  transition: opacity var(--motion-soft);
 }
 
 body[data-page="3"] .book-column--left {
@@ -175,11 +190,13 @@ body[data-page="3"] .book-column--left {
 
 body[data-page="2"] .layer-scroll--about {
   visibility: hidden;
+  opacity: 0;
   pointer-events: none;
 }
 
 body[data-page="3"] .layer-scroll--index {
   visibility: hidden;
+  opacity: 0;
   pointer-events: none;
 }
 

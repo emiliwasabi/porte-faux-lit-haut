@@ -22,4 +22,129 @@
   height: auto;
   vertical-align: middle;
   content-visibility: auto;
+  cursor: zoom-in;
+}
+
+.project-description {
+  position: absolute;
+  right: var(--index-pad-right);
+  bottom: var(--index-pad-bottom);
+  z-index: 5;
+  width: min(22ch, calc(100% - var(--index-pad-left) - var(--index-pad-right)));
+  margin: 0;
+  color: var(--ink);
+  font-family: "ABC Diatype", "Helvetica Neue", Arial, sans-serif;
+  font-size: var(--index-size);
+  line-height: 1.18;
+  text-align: center;
+  text-wrap: balance;
+  transform: rotate(-16deg);
+  transform-origin: left center;
+  pointer-events: none;
+}
+
+body:not([data-project]) .project-description,
+body[data-page="3"] .project-description {
+  display: none;
+}
+
+.media-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr) 4rem;
+  align-items: center;
+  justify-items: center;
+  background: rgba(252, 252, 250, 0.18);
+  backdrop-filter: blur(18px) saturate(1.15);
+  -webkit-backdrop-filter: blur(18px) saturate(1.15);
+  padding: 2rem;
+}
+
+.media-lightbox[hidden] {
+  display: none;
+}
+
+.media-lightbox__stage {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.media-lightbox__media {
+  display: block;
+  max-width: min(82vw, 1200px);
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.media-lightbox__media--from-right {
+  animation: media-slide-from-right var(--motion-soft) both;
+}
+
+.media-lightbox__media--from-left {
+  animation: media-slide-from-left var(--motion-soft) both;
+}
+
+@keyframes media-slide-from-right {
+  from {
+    opacity: 0;
+    transform: translateX(10vw);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes media-slide-from-left {
+  from {
+    opacity: 0;
+    transform: translateX(-10vw);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.media-lightbox button {
+  border: 0;
+  color: var(--ink);
+  background: transparent;
+  font: inherit;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.media-lightbox button:hover {
+  opacity: 0.55;
+}
+
+.media-lightbox button:disabled {
+  visibility: hidden;
+}
+
+@media (max-width: 700px) {
+  .media-lightbox {
+    grid-template-columns: 2.5rem minmax(0, 1fr) 2.5rem;
+    padding: 1rem;
+  }
+
+  .media-lightbox__media {
+    max-width: 88vw;
+    max-height: 82vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .media-lightbox__media--from-right,
+  .media-lightbox__media--from-left {
+    animation: none;
+  }
 }

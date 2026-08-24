@@ -15,7 +15,7 @@ body[data-page="3"] .book-gutter.is-index-mix {
 }
 
 .book-gutter.is-index-mix {
-  padding-top: clamp(0.75rem, 2vh, 1.25rem);
+  padding-top: 0;
   padding-bottom: clamp(1.5rem, 4vh, 2.5rem);
 }
 
@@ -26,7 +26,7 @@ body[data-page="3"] .book-gutter.is-index-mix {
 .book-gutter {
   width: 100%;
   min-height: auto;
-  padding: clamp(1.25rem, 3vh, 2rem) 0;
+  padding: 0;
   font-family: "ABC Diatype", "Helvetica Neue", Arial, sans-serif;
   font-size: var(--index-size);
   color: var(--ink);
@@ -136,7 +136,7 @@ body[data-page="2"] .book-gutter.is-project-sync .gutter-item {
 .book-gutter.is-project-sync .gutter-media--top,
 .book-gutter.is-project-sync .gutter-media--bottom {
   flex: 1 1 0;
-  justify-content: space-evenly;
+  justify-content: flex-start;
 }
 
 .book-gutter.is-project-sync .gutter-item {

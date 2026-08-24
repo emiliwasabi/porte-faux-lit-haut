@@ -20,6 +20,7 @@ const hosts = {
 };
 
 let page = 1;
+let previousPage = 1;
 let bookOpened = false;
 const coverBranch = document.querySelector(".nav-cover-branch");
 
@@ -52,11 +53,10 @@ function goHome() {
 
 function setPage(n) {
   if (n > 1) bookOpened = true;
+  if (n !== page) previousPage = page;
   page = n;
   document.body.dataset.page = String(page);
   if (pageNum) pageNum.textContent = String(page);
-  if (cover) cover.hidden = page !== 1;
-  if (spread) spread.hidden = page === 1;
   layout();
   coverBranch?.toggleAttribute("hidden", page === 1 || !bookOpened);
   document.dispatchEvent(new CustomEvent("pagechange", { detail: { page } }));
@@ -78,6 +78,16 @@ document.addEventListener("click", (e) => {
       document.dispatchEvent(new CustomEvent("indexreset"));
       setPage(3);
     }
+    return;
+  }
+  if (t.closest(".gutter-contacts .about-link")) {
+    e.preventDefault();
+    document.dispatchEvent(new CustomEvent("indexreset"));
+    setPage(3);
+    return;
+  }
+  if (page === 3 && !t.closest(".about-lead, .about-colophon")) {
+    setPage(previousPage);
     return;
   }
   if (t.closest("a.index-entry") || t.closest(".gutter-contacts a")) return;

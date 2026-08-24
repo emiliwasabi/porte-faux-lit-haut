@@ -36,14 +36,28 @@ optimize_video() {
   echo "optimized video: $file"
 }
 
-while IFS= read -r file; do
-  [ -n "$file" ] && optimize_image "$file"
-done < <(
-  find "$ROOT/assets/projects" -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' \)
-)
+optimize_file() {
+  local file="$1"
+  case "${file##*.}" in
+    jpg | JPG | jpeg | JPEG | png | PNG) optimize_image "$file" ;;
+    mp4 | MP4) optimize_video "$file" ;;
+  esac
+}
 
-while IFS= read -r file; do
-  [ -n "$file" ] && optimize_video "$file"
-done < <(find "$ROOT/assets/projects" -type f -iname '*.mp4')
+if [ "$#" -gt 0 ]; then
+  for file in "$@"; do
+    optimize_file "$file"
+  done
+else
+  while IFS= read -r -d '' file; do
+    optimize_image "$file"
+  done < <(
+    find "$ROOT/assets/projects" -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' \) -print0
+  )
+
+  while IFS= read -r -d '' file; do
+    optimize_video "$file"
+  done < <(find "$ROOT/assets/projects" -type f -iname '*.mp4' -print0)
+fi
 
 du -sh "$ROOT/assets/projects"

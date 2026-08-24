@@ -23,7 +23,10 @@
     });
   }
 
-  function letterizeScatter(el, { lineClass, letterClass } = {}) {
+  function letterizeScatter(
+    el,
+    { lineClass, letterClass, scatterOnInit = false, hover = true } = {},
+  ) {
     const text = el.textContent.trim();
     const letters = [...text];
     el.textContent = "";
@@ -37,6 +40,14 @@
     });
 
     if (reduced) return;
+
+    if (scatterOnInit) {
+      spans.forEach((span) => {
+        if (/\S/.test(span.textContent)) scatterSpan(span);
+      });
+    }
+
+    if (!hover) return;
 
     let scattered = false;
 
@@ -70,7 +81,18 @@
   });
 
   document.querySelectorAll(".about-dash").forEach((el) => {
-    letterizeScatter(el, { letterClass: "cover-letter" });
+    letterizeScatter(el, {
+      letterClass: "cover-letter",
+      scatterOnInit: true,
+      hover: false,
+    });
+  });
+
+  document.addEventListener("pagechange", (event) => {
+    if (event.detail?.page !== 3 || reduced) return;
+    document.querySelectorAll(".about-dash .cover-letter").forEach((span) => {
+      if (/\S/.test(span.textContent)) scatterSpan(span);
+    });
   });
 
   const jaquette = document.querySelector(".jaquette");
