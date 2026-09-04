@@ -2,6 +2,12 @@
   const body = document.querySelector(".index-body");
   if (!body) return;
 
+  function updateActiveIndexState(slug) {
+    body.querySelectorAll(".index-entry").forEach((entry) => {
+      entry.classList.toggle("is-active", entry.id === slug);
+    });
+  }
+
   function entry(project, practice) {
     const a = document.createElement("a");
     a.href = `#${project.slug}`;
@@ -20,6 +26,20 @@
     return a;
   }
 
+  document.addEventListener("projectvisit", (event) => {
+    updateActiveIndexState(event.detail?.project?.slug || null);
+  });
+
+  document.addEventListener("indexreset", () => {
+    updateActiveIndexState(null);
+  });
+
+  document.addEventListener("pagechange", (event) => {
+    if (event.detail?.page !== 2) {
+      updateActiveIndexState(null);
+    }
+  });
+
   getProjectsData()
     .then((data) => {
       const practices = Object.fromEntries((data.practices || []).map((x) => [x.id, x]));
@@ -28,6 +48,7 @@
         .sort((a, b) => (a.order ?? Infinity) - (b.order ?? Infinity))
         .map((project) => entry(project, practices[project.practice]));
       body.replaceChildren(...list);
+      updateActiveIndexState(document.body.dataset.project || null);
     })
     .catch((err) => console.error("render-index", err));
 })();

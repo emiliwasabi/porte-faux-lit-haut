@@ -16,18 +16,23 @@ body[data-page="3"] .book-gutter.is-index-mix {
 
 .book-gutter.is-index-mix {
   padding-top: 0;
-  padding-bottom: clamp(1.5rem, 4vh, 2.5rem);
+  padding-bottom: 0;
+}
+
+body[data-page="2"][data-project="thesis-draft"] .book-gutter.is-index-mix .gutter-item,
+body[data-page="2"][data-project="thesis-draft"] .book-gutter.is-index-mix .gutter-contacts {
+  opacity: var(--veil-opacity);
 }
 
 .book-gutter.is-index-mix .gutter-media--bottom {
-  padding-bottom: clamp(0.5rem, 1.5vh, 1rem);
+  padding-bottom: 0;
 }
 
 .book-gutter {
   width: 100%;
   min-height: auto;
   padding: 0;
-  font-family: "ABC Diatype", "Helvetica Neue", Arial, sans-serif;
+  font-family: "IS Plasma Regular", sans-serif;
   font-size: var(--index-size);
   color: var(--ink);
   display: flex;
@@ -119,6 +124,7 @@ body[data-page="2"] .book-gutter.is-project-sync .gutter-item {
   align-items: center;
   gap: clamp(0.35rem, 0.75vh, 0.6rem);
   width: 100%;
+  padding-bottom: 0;
 }
 
 .gutter-item {

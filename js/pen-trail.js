@@ -1,4 +1,5 @@
 (() => {
+  const penTrailEnabled = false;
   const MIN_POINT_GAP = 2.5;
   const MAX_STROKE_GAP = 52;
   const INK_DURATION_MS = 3000;
@@ -8,7 +9,7 @@
     "(prefers-reduced-motion: reduce)",
   ).matches;
 
-  if (reducedMotion) return;
+  if (!penTrailEnabled || reducedMotion) return;
 
   const canvas = document.createElement("canvas");
   canvas.className = "pen-trail";

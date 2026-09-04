@@ -24,7 +24,7 @@ body[data-page="3"] .about-host--above {
   margin: 0 auto;
   padding: 0 0 clamp(3rem, 8vh, 6rem);
   text-align: center;
-  font-family: "ABC Diatype", "Helvetica Neue", Arial, sans-serif;
+  font-family: "IS Plasma Regular", sans-serif;
   font-size: var(--index-flow-size);
   font-weight: 500;
   line-height: 1.18;

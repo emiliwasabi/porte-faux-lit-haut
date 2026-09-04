@@ -1,8 +1,8 @@
 @font-face {
-  font-family: "ABC Diatype";
-  src: url("../assets/fonts/ABCDiatype-Medium-Trial.otf") format("opentype");
+  font-family: "IS Plasma Regular";
+  src: url("../assets/fonts/ISPlasma-Regular.otf") format("opentype");
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-display: swap;
 }
 
@@ -47,7 +47,7 @@ body {
   --index-pad-left: calc(clamp(14px, 2.8vw, 32px) + var(--spine-clearance));
   --motion-soft: 0.55s cubic-bezier(0.33, 1, 0.45, 1);
   color: var(--ink);
-  font-family: "ABC Diatype", "Helvetica Neue", Arial, sans-serif;
+  font-family: "IS Plasma Regular", sans-serif;
   background: var(--paper-solid);
 }
 

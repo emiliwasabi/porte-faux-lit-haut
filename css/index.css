@@ -39,7 +39,7 @@ body[data-page="2"] a.index-entry {
   margin: 0 auto;
   padding: 0 0 clamp(3rem, 8vh, 6rem);
   text-align: center;
-  font-family: "ABC Diatype", "Helvetica Neue", Arial, sans-serif;
+  font-family: "IS Plasma Regular", sans-serif;
   font-size: var(--index-flow-size);
   font-weight: 500;
   line-height: 1.18;
@@ -62,6 +62,12 @@ body[data-page="1"] a.index-entry {
 
 a.index-entry:hover {
   opacity: 0.55;
+}
+
+a.index-entry.is-active,
+a.index-entry.is-active:hover {
+  color: rgba(84, 63, 63, 0.8);
+  opacity: 1;
 }
 
 .index-title {

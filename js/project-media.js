@@ -55,9 +55,19 @@
 
   const bySlug = (slug) => projects.find((p) => p.slug === slug);
 
+  function shuffleArray(items) {
+    const copy = [...items];
+    for (let i = copy.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+  }
+
   function gutterPartitionIndex() {
+    const indexProjects = projects.filter((project) => project.active !== false);
     const items = [];
-    for (const project of projects) {
+    for (const project of shuffleArray(indexProjects)) {
       const files = project.images || [];
       if (!files.length) continue;
       items.push({ project, filename: files[0], imageIndex: 0 });
@@ -167,20 +177,258 @@
     if (!top || !bottom || !projects.length) return;
 
     activeSlug = slug;
-    const partition = slug
-      ? gutterPartitionOne(bySlug(slug))
-      : gutterPartitionIndex();
-    const part = fillGutter(partition, Boolean(slug));
-    const eager = slug ? 2 : 1;
+    const isThesis = slug === "thesis-draft";
+    const partition = isThesis
+      ? gutterPartitionIndex()
+      : slug
+        ? gutterPartitionOne(bySlug(slug))
+        : gutterPartitionIndex();
+    const part = fillGutter(partition, true);
+    const eager = slug && !isThesis ? 2 : 1;
     renderGutterGroup(top, part.top, eager);
     renderGutterGroup(
       bottom,
       part.bottom,
       Math.max(0, eager - part.top.length),
     );
-    bookGutter?.classList.toggle("is-project-sync", Boolean(slug));
-    bookGutter?.classList.toggle("is-index-mix", !slug);
-    setGutterHighlight(slug ? 0 : -1);
+    bookGutter?.classList.toggle("is-project-sync", Boolean(slug) && !isThesis);
+    bookGutter?.classList.toggle("is-index-mix", !slug || isThesis);
+    setGutterHighlight(slug && !isThesis ? 0 : -1);
+  }
+
+  function slugify(value) {
+    return String(value)
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9\s-]/g, "")
+      .trim()
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-");
+  }
+
+  function formatChapterLabel(line) {
+    const match = String(line).trim().match(/^([IVXLC]+)(?:\.\s*|\s+)(.+)$/);
+    if (!match) return String(line).trim();
+    const numeral = match[1];
+    const title = match[2].trim();
+    if (!title) return `${numeral}.`;
+    return `${numeral}. ${title}`;
+  }
+
+  async function renderProjectText(project, host) {
+    if (!host || !project?.textFile) return;
+
+    const fileUrl = `./${project.folder}/${project.textFile}`;
+    let text = project.description || "";
+
+    try {
+      const response = await fetch(fileUrl);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      text = await response.text();
+    } catch (error) {
+      console.error("project-text", error);
+    }
+
+    const block = document.createElement("article");
+    block.className = "project-text";
+
+    const lines = (text || "")
+      .replace(/\r/g, "")
+      .split(/\n/)
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0);
+
+    if (!lines.length) {
+      host.replaceChildren(block);
+      host.hidden = false;
+      return;
+    }
+
+    const title = document.createElement("h2");
+    title.className = "project-text__title";
+    title.textContent = lines[0] || project.title;
+
+    const subtitle = document.createElement("p");
+    subtitle.className = "project-text__subtitle";
+    subtitle.textContent = lines[1] || project.description || "";
+
+    const intro = document.createElement("nav");
+    intro.className = "project-text__index";
+    const chapterMatches = [];
+    const chapterPattern = /^([IVXLC]+)(?:\.\s*|\s+)(.+)$/;
+
+    lines.slice(2).forEach((line) => {
+      const match = line.match(chapterPattern);
+      if (match) {
+        const titleText = match[2].trim();
+        const label = formatChapterLabel(line);
+        chapterMatches.push({
+          id: slugify(titleText),
+          label,
+        });
+      }
+    });
+
+    if (chapterMatches.length) {
+      const list = document.createElement("ol");
+      list.className = "project-text__index-list";
+      chapterMatches.forEach((chapter) => {
+        const item = document.createElement("li");
+        item.className = "project-text__index-item";
+        const link = document.createElement("a");
+        link.href = `#${chapter.id}`;
+        link.className = "project-text__index-link";
+        link.textContent = chapter.label;
+        item.append(link);
+        list.append(item);
+      });
+      intro.append(list);
+    }
+
+    const body = document.createElement("div");
+    body.className = "project-text__body";
+
+    const contentLines = (text || "")
+      .replace(/\r/g, "")
+      .split(/\n/)
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0);
+
+    const titleValue = contentLines[0] || project.title;
+    const subtitleValue = contentLines[1] || project.description || "";
+    const bodyLines = contentLines.slice(2);
+    const planIndex = bodyLines.findIndex((line) => /^\(plan:\)$|^plan:?$/i.test(line));
+    const trimmedBodyLines = planIndex >= 0 ? bodyLines.slice(0, planIndex) : bodyLines;
+    const firstChapterIndex = trimmedBodyLines.findIndex((line) => /^([IVXLC]+)\.?\s+/.test(line));
+    const introLines = firstChapterIndex >= 0 ? trimmedBodyLines.slice(0, firstChapterIndex) : trimmedBodyLines;
+    const chapterLines = firstChapterIndex >= 0 ? trimmedBodyLines.slice(firstChapterIndex) : [];
+
+    const renderMetaLineGroup = (lines, container) => {
+      const label = lines[0] || "";
+      const meta = document.createElement("p");
+      meta.className = "project-text__meta";
+      meta.textContent = label;
+      container.append(meta);
+
+      const rest = lines.slice(1).join(" ");
+      if (rest) {
+        const para = document.createElement("p");
+        para.className = "project-text__paragraph";
+        para.textContent = rest.replace(/\s+/g, " ").trim();
+        container.append(para);
+      }
+    };
+
+    const renderParagraphGroup = (lines, container) => {
+      const para = document.createElement("p");
+      para.className = "project-text__paragraph";
+      para.textContent = lines.join(" ").replace(/\s+/g, " ").trim();
+      container.append(para);
+    };
+
+    const renderChapterLineGroup = (lines, container) => {
+      const firstLine = lines[0] || "";
+      const chapterMatch = firstLine.match(/^([IVXLC]+)\.?\s*(.+)$/);
+      if (!chapterMatch) {
+        renderParagraphGroup(lines, container);
+        return;
+      }
+
+      const heading = document.createElement("h3");
+      heading.className = "project-text__chapter";
+      const chapterText = chapterMatch[2].trim();
+      heading.id = slugify(chapterText);
+      heading.textContent = formatChapterLabel(firstLine);
+      container.append(heading);
+
+      const rest = lines.slice(1).join(" ");
+      if (rest) {
+        const para = document.createElement("p");
+        para.className = "project-text__paragraph";
+        para.textContent = rest.replace(/\s+/g, " ").trim();
+        container.append(para);
+      }
+    };
+
+    let i = 0;
+    while (i < introLines.length) {
+      const line = introLines[i];
+      if (!line) {
+        i += 1;
+        continue;
+      }
+
+      if (/^\(.*:\)$/i.test(line)) {
+        const group = [line];
+        i += 1;
+        while (i < introLines.length && !/^\(.*:\)$/i.test(introLines[i]) && !/^([IVXLC]+)\.?\s+/.test(introLines[i])) {
+          group.push(introLines[i]);
+          i += 1;
+        }
+        renderMetaLineGroup(group, body);
+        continue;
+      }
+
+      const group = [line];
+      i += 1;
+      while (i < introLines.length && !/^\(.*:\)$/i.test(introLines[i]) && !/^([IVXLC]+)\.?\s+/.test(introLines[i])) {
+        group.push(introLines[i]);
+        i += 1;
+      }
+      renderParagraphGroup(group, body);
+    }
+
+    if (chapterLines.length) {
+      const chapterMatches = [];
+      chapterLines.forEach((line) => {
+        const match = line.match(/^([IVXLC]+)\.?\s*(.+)$/);
+        if (match) {
+          chapterMatches.push({
+            id: slugify(match[2].trim()),
+            label: `${match[1]}. ${match[2].trim()}`,
+          });
+        }
+      });
+
+      if (chapterMatches.length) {
+        const list = document.createElement("ol");
+        list.className = "project-text__index-list";
+        chapterMatches.forEach((chapter) => {
+          const item = document.createElement("li");
+          item.className = "project-text__index-item";
+          const link = document.createElement("a");
+          link.href = `#${chapter.id}`;
+          link.className = "project-text__index-link";
+          link.textContent = chapter.label;
+          item.append(link);
+          list.append(item);
+        });
+        intro.replaceChildren(list);
+      }
+    }
+
+    let chapterIndex = 0;
+    while (chapterIndex < chapterLines.length) {
+      const line = chapterLines[chapterIndex];
+      if (!line) {
+        chapterIndex += 1;
+        continue;
+      }
+      const group = [line];
+      chapterIndex += 1;
+      while (chapterIndex < chapterLines.length && !/^([IVXLC]+)\.?\s+/.test(chapterLines[chapterIndex])) {
+        group.push(chapterLines[chapterIndex]);
+        chapterIndex += 1;
+      }
+      renderChapterLineGroup(group, body);
+    }
+
+    title.textContent = titleValue;
+    subtitle.textContent = subtitleValue;
+    block.append(title, subtitle, body, intro);
+    host.replaceChildren(block);
+    host.hidden = false;
   }
 
   function renderGallery(slug) {
@@ -195,12 +443,26 @@
     }
 
     const project = bySlug(slug);
-    if (!project?.images?.length) {
+    if (!project) {
       renderGallery(null);
       return;
     }
 
     activeSlug = slug;
+    if (!project.images?.length) {
+      galleryHost.hidden = !project.textFile;
+      galleryHost.replaceChildren();
+      galleryObserver?.disconnect();
+      galleryObserver = null;
+      leftScroll && (leftScroll.scrollTop = 0);
+      if (project.textFile && project.slug === "thesis-draft") {
+        window.renderThesisProjectText?.(project, galleryHost).catch((error) => console.error("project-text", error));
+      } else if (project.textFile) {
+        renderProjectText(project, galleryHost).catch((error) => console.error("project-text", error));
+      }
+      return;
+    }
+
     const wrap = document.createElement("div");
     wrap.className = "project-gallery";
     project.images.forEach((filename, i) => {
@@ -289,8 +551,9 @@
     const project = bySlug(slug);
     if (project) preloadProjectImages(project, 2);
     if (projectDescription) {
-      projectDescription.textContent = project?.description || "";
-      projectDescription.hidden = !project?.description;
+      const shouldHide = project?.slug === "thesis-draft";
+      projectDescription.textContent = shouldHide ? "" : project?.description || "";
+      projectDescription.hidden = shouldHide || !project?.description;
     }
     renderGutter(slug);
     renderGallery(slug);

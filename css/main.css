@@ -3,7 +3,7 @@
 @import "./book.css";
 @import "./cover.css";
 @import "./index.css";
-@import "./gutter.css";
+@import "./gutter.css?v=5";
 @import "./project-gallery.css";
 @import "./about.css";
 @import "./jaquette.css";
