@@ -1,528 +1,69 @@
+/*
+  Previous mobile experience kept in reserve for later restoration.
+  (mobile functionality retained here for a future revisit)
+*/
+
 @media (max-width: 700px) {
+  html,
   body {
-    --gutter-width: 0;
-    --spine-clearance: 0;
-    --jaquette-peek: 2.85rem;
-    --jaquette-width: min(11.5rem, 58vw);
-    --jaquette-inset: 0;
-    --index-pad-top: clamp(3.5rem, 12vh, 5rem);
-    --index-pad-right: calc(var(--jaquette-peek) + 0.85rem);
-    --index-pad-bottom: clamp(2rem, 8vh, 3rem);
-    --index-pad-left: max(1rem, env(safe-area-inset-left));
-    --index-flow-size: clamp(0.88rem, 4.1vw, 1.05rem);
-    --index-legend-size: clamp(0.54rem, 2.8vw, 0.66rem);
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    overscroll-behavior: none;
+    touch-action: none;
   }
 
-  .page-number {
-    display: none;
+  body {
+    background: var(--paper-under, #d7c2b3);
   }
 
-  .book-column--gutter,
-  .gutter-host,
-  .gutter-host--cover {
+  .book-page,
+  .top-content,
+  .index-sheet,
+  .book-gutter,
+  .about-sheet,
+  .mobile-experience,
+  .mobile-return,
+  .media-lightbox,
+  .jaquette {
     display: none !important;
   }
 
-  .cover-under .gutter-host--cover {
-    display: none;
-  }
-
-  body[data-page="1"],
-  body[data-page="2"],
-  body[data-page="3"] {
-    background: var(--paper-under);
-  }
-
-  .book-surface--cover,
-  .book-surface--spread {
-    background: var(--paper);
-  }
-
-  .cover-under .index-host--cover {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    opacity: var(--veil-opacity);
-    pointer-events: none;
-    padding: var(--index-pad-top) calc(var(--jaquette-width) + 0.5rem)
-      var(--index-pad-bottom) var(--index-pad-left);
-  }
-
-  .spread-under .index-host--under,
-  .spread-under .about-host--under {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    opacity: var(--veil-opacity);
-    pointer-events: none;
-    padding: var(--index-pad-top) var(--index-pad-right) var(--index-pad-bottom)
-      var(--index-pad-left);
-  }
-
-  body[data-page="2"] .spread-under .index-host--under {
-    display: none;
-  }
-
-  body[data-page="3"] .spread-under .about-host--under {
-    display: none;
-  }
-
-  .spread-under {
-    display: block;
-    visibility: visible;
-    pointer-events: none;
-  }
-
-  .book-columns {
-    grid-template-columns: 1fr;
-  }
-
-  .book-column--left,
-  .book-column--right {
-    grid-column: 1;
-  }
-
-  .layer-scroll--cover .page-content {
-    padding-left: max(var(--page-pad), env(safe-area-inset-left));
-    overflow-x: clip;
-  }
-
-  body[data-page="1"] .layer-scroll--cover .page-content {
-    padding-right: 0;
-  }
-
-  body[data-page="2"] .layer-scroll--cover .page-content,
-  body[data-page="3"] .layer-scroll--cover .page-content {
-    padding-right: calc(var(--jaquette-peek) + 0.5rem);
-  }
-
-  body[data-page="2"]:not([data-project]) .layer-scroll--index,
-  body[data-page="3"] .layer-scroll--about,
-  body[data-page="2"][data-project] .layer-scroll--left {
-    background: transparent;
-  }
-
-  body[data-page="2"]:not([data-project]) .layer-scroll--index::before,
-  body[data-page="3"] .layer-scroll--about::before,
-  body[data-page="2"][data-project] .layer-scroll--left::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    background: var(--paper);
-    pointer-events: none;
-  }
-
-  body[data-page="2"]:not([data-project]) .layer-scroll--index::after,
-  body[data-page="3"] .layer-scroll--about::after,
-  body[data-page="2"][data-project] .layer-scroll--left::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background: repeating-linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.012) 0px,
-      rgba(0, 0, 0, 0.012) 1px,
-      transparent 1px,
-      transparent 4px
-    );
-  }
-
-  body[data-page="3"] .spread-under .index-host--under {
-    left: 0;
-    right: auto;
-    width: calc(100vw - var(--jaquette-peek));
-    opacity: var(--ghost-opacity);
-    transform: scaleX(-1);
-    transform-origin: center center;
-    padding: var(--index-pad-top) var(--index-pad-right) var(--index-pad-bottom)
-      var(--index-pad-left);
-  }
-
-  body[data-page="1"] {
-    --cover-zone-width: calc(100vw - var(--jaquette-width));
-  }
-
-  .top-content {
-    position: fixed;
-    z-index: 2;
-    margin: 0;
-    pointer-events: none;
-    box-sizing: border-box;
-  }
-
-  body[data-page="1"] .top-content {
-    top: clamp(52px, 14vh, 88px);
-    left: 0;
-    margin-top: 0;
-    width: var(--cover-zone-width);
-    max-width: var(--cover-zone-width);
-    padding: 0 0.75rem 1rem max(1rem, env(safe-area-inset-left));
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.35rem;
-  }
-
-  body[data-page="2"] .top-content,
-  body[data-page="3"] .top-content {
-    display: none;
-  }
-
-  .mobile-experience {
-    display: block;
-    position: fixed;
-    inset: 0;
-    z-index: 12;
-    background: transparent;
-    pointer-events: auto;
-  }
-
-  body[data-page="3"] .mobile-experience {
-    display: none;
-  }
-
-  .mobile-projects {
-    height: 100dvh;
-    overflow-y: auto;
-    scroll-snap-type: y mandatory;
-    overscroll-behavior-y: contain;
-    -webkit-overflow-scrolling: touch;
-    background: transparent;
-  }
-
-  .mobile-project-card {
-    position: relative;
-    width: 100%;
-    height: 100dvh;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-    background: var(--paper);
-  }
-
-  .mobile-landing-arrow {
-    position: fixed;
-    left: 50%;
-    bottom: max(1rem, env(safe-area-inset-bottom));
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.2rem;
-    opacity: 0.72;
-    z-index: 14;
-    pointer-events: none;
-    animation: mobile-arrow-pulse 1.8s ease-in-out infinite;
-  }
-
-  .mobile-landing-arrow__line {
-    width: 1px;
-    height: 1.2rem;
-    background: rgba(0, 0, 0, 0.8);
-  }
-
-  .mobile-landing-arrow__head {
-    width: 0.7rem;
-    height: 0.7rem;
-    border-right: 1px solid rgba(0, 0, 0, 0.8);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.8);
-    transform: rotate(225deg) translateX(-0.2rem);
-  }
-
-  @keyframes mobile-arrow-pulse {
-    0%,
-    100% {
-      transform: translateX(-50%) translateY(0);
-      opacity: 0.5;
-    }
-    50% {
-      transform: translateX(-50%) translateY(0.3rem);
-      opacity: 1;
-    }
-  }
-
-  .mobile-project-gallery {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-x: contain;
-    touch-action: pan-y;
-    background: var(--paper);
-  }
-
-  .mobile-project-gallery::-webkit-scrollbar {
-    display: none;
-  }
-
-  .mobile-project-slide {
-    position: relative;
-    flex: 0 0 100%;
-    width: 100%;
-    height: 100%;
-    scroll-snap-align: center;
-    scroll-snap-stop: always;
-    display: block;
-    margin: 0;
-  }
-
-  .mobile-project-media,
-  .mobile-project-empty {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    background: var(--paper);
-  }
-
-  .mobile-project-empty {
+  .mobile-locked-message {
     display: grid;
     place-items: center;
-    background: rgba(0, 0, 0, 0.04);
-    font-family: "IS Plasma Regular", sans-serif;
-    font-size: clamp(1.1rem, 5vw, 1.7rem);
-    letter-spacing: 0.02em;
-  }
-
-  .mobile-project-caption {
-    position: absolute;
-    left: 1rem;
-    right: 1rem;
-    bottom: calc(1rem + env(safe-area-inset-bottom));
-    display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
-    opacity: 0;
-    transform: translateY(0.7rem);
-    transition: opacity 180ms ease, transform 180ms ease;
-    pointer-events: none;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-  }
-
-  .mobile-project-card.is-paused .mobile-project-caption {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .mobile-project-caption__title {
-    font-family: "IS Plasma Regular", sans-serif;
-    font-size: clamp(1.3rem, 7vw, 2rem);
-    line-height: 1;
-    font-weight: 500;
-    letter-spacing: -0.03em;
-    text-transform: lowercase;
-    color: rgba(17, 17, 17, 0.95);
-  }
-
-  .mobile-project-caption__description {
-    font-family: "IS Plasma Regular", sans-serif;
-    font-size: clamp(0.68rem, 3.4vw, 0.82rem);
-    line-height: 1.3;
-    letter-spacing: 0.02em;
-    text-transform: lowercase;
-    color: rgba(17, 17, 17, 0.82);
-  }
-
-  body[data-page="2"]:not([data-project]) .layer-scroll--index {
-    display: none !important;
-  }
-
-  .top-content .left-column,
-  .top-content .right-column,
-  .top-content h1,
-  .top-content .contacts p {
-    pointer-events: auto;
-  }
-
-  body[data-page="1"] .left-column,
-  body[data-page="1"] .right-column {
-    width: 100%;
-    max-width: 100%;
-    padding: 0;
-    align-items: flex-start;
-    text-align: left;
-  }
-
-  body[data-page="1"] .left-column h1 {
-    text-align: left;
-    line-height: 1.2;
-    font-size: var(--text-size);
-  }
-
-  body[data-page="1"] .right-column.contacts {
-    align-items: flex-start;
-    transform: none;
-    gap: 0.15rem;
-  }
-
-  body[data-page="1"] .right-column.contacts p {
-    text-align: left;
-    font-size: var(--text-size);
-    line-height: 1.2;
-  }
-
-  body[data-page="1"] .jaquette {
-    right: 0;
-  }
-
-  body[data-page="2"] .jaquette,
-  body[data-page="3"] .jaquette {
-    right: calc(var(--jaquette-peek) - var(--jaquette-width));
-  }
-
-  body[data-page="2"] .jaquette.is-revealed,
-  body[data-page="3"] .jaquette.is-revealed {
-    right: 0;
-  }
-
-  body[data-page="2"]:not([data-project]) .layer-scroll--left {
-    display: none;
-  }
-
-  body[data-page="2"]:not([data-project]) .book-column--left {
-    visibility: hidden;
-    pointer-events: none;
-  }
-
-  body[data-page="2"]:not([data-project]) .layer-scroll--index {
-    visibility: visible;
-    pointer-events: auto;
     position: fixed;
     inset: 0;
-    z-index: 4;
-    width: 100%;
-  }
-
-  body[data-page="2"]:not([data-project]) .index-host--above {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    min-height: 100dvh;
-    padding: var(--index-pad-top) var(--index-pad-right) var(--index-pad-bottom)
-      var(--index-pad-left);
-  }
-
-  body[data-page="2"][data-project] .layer-scroll--index {
-    visibility: hidden;
+    z-index: 9999;
+    padding: clamp(1.5rem, 7vw, 3rem);
+    box-sizing: border-box;
+    background: rgba(215, 194, 179, 0.94);
     pointer-events: none;
   }
 
-  body[data-page="2"][data-project] .book-column--left {
-    visibility: visible;
-    pointer-events: auto;
-  }
-
-  body[data-page="2"][data-project] .layer-scroll--left {
-    display: block;
-    position: fixed;
-    inset: 0;
-    z-index: 4;
-    width: 100%;
-  }
-
-  body[data-page="3"] .book-column--left {
-    visibility: hidden;
-    pointer-events: none;
-  }
-
-  body[data-page="3"] .layer-scroll--index {
-    visibility: hidden;
-    pointer-events: none;
-  }
-
-  body[data-page="3"] .layer-scroll--about {
-    visibility: visible;
-    pointer-events: auto;
-    position: fixed;
-    inset: 0;
-    z-index: 4;
-    width: 100%;
-  }
-
-  body[data-page="3"] .about-host--above {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    min-height: 100dvh;
-    padding: var(--index-pad-top) var(--index-pad-right) var(--index-pad-bottom)
-      var(--index-pad-left);
-  }
-
-  body[data-page="3"] .about-layout {
-    min-height: auto;
-    justify-content: center;
-  }
-
-  body[data-page="3"] .about-colophon {
-    margin-top: clamp(1.25rem, 4vh, 2rem);
-    padding-bottom: 0;
-  }
-
-  body[data-page="2"]:not([data-project]) .index-body {
-    padding-bottom: clamp(2.75rem, 10vh, 3.75rem);
-  }
-
-  .index-legend-host {
-    display: block !important;
-    visibility: visible;
-    position: fixed;
-    left: max(1rem, env(safe-area-inset-left));
-    right: calc(var(--jaquette-peek) + 0.85rem);
-    bottom: max(1rem, env(safe-area-inset-bottom));
-    z-index: 5;
+  .mobile-locked-message__inner {
+    max-width: min(30rem, 82vw);
     text-align: center;
-    pointer-events: none;
   }
 
-  body[data-page="1"] .index-legend-host,
-  body[data-page="3"] .index-legend-host,
-  body[data-page="2"][data-project] .index-legend-host {
-    display: none !important;
-  }
-
-  .mobile-return {
-    display: none;
-    position: fixed;
-    top: max(0.75rem, env(safe-area-inset-top));
-    left: max(0.75rem, env(safe-area-inset-left));
-    z-index: 25;
+  .mobile-locked-message__text {
     margin: 0;
-    padding: 0.5rem 0.85rem;
-    border: 1px solid rgba(84, 63, 63, 0.45);
-    border-radius: 2px;
-    background: var(--paper-solid);
-    box-shadow: 0 1px 8px rgba(84, 63, 63, 0.12);
-    color: var(--ink);
-    font-family: "IS Plasma Regular", sans-serif;
-    font-size: clamp(0.95rem, 4.2vw, 1.05rem);
-    font-weight: 500;
-    line-height: 1.2;
-    text-decoration: underline dashed;
-    text-underline-offset: 0.18em;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
+    color: rgba(17, 17, 17, 0.95);
+    font-family: "IS Plasma Regular", "Georgia", serif;
+    font-size: clamp(1.1rem, 4vw, 1.9rem);
+    line-height: 1.35;
+    letter-spacing: 0.02em;
+    text-transform: lowercase;
   }
 
-  body[data-page="2"][data-project] .mobile-return {
+  .mobile-locked-message__text span {
     display: block;
   }
+}
 
-  .mobile-return:active {
-    opacity: 0.72;
-    transform: scale(0.98);
+@media (min-width: 701px) {
+  .mobile-locked-message {
+    display: none !important;
   }
 }
