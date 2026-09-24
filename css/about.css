@@ -117,6 +117,23 @@ body[data-page="3"] .about-host--above {
   font-weight: 400;
 }
 
+.about-awards__title {
+  margin-top: clamp(1.5rem, 3vh, 2rem);
+}
+
+.about-awards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.55rem, 1.2vh, 0.75rem);
+}
+
+.about-awards li {
+  margin: 0;
+}
+
 .about-prose {
   margin: 0;
   font: inherit;
